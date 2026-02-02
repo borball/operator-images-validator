@@ -23,7 +23,6 @@ This document contains validation reports for OpenShift operator images using th
 | ACM (GA) | v4.20 | release-2.14 | Source | 96 | 96 (100%) | 0 | 🟢 **PASSED** |
 | ACM (GA) | v4.20 | release-2.15 | Source | 104 | 104 (100%) | 0 | 🟢 **PASSED** |
 | RAN (GA) | v4.20 | stable/stable-6.4 | Source | 37 | 37 (100%) | 0 | 🟢 **PASSED** |
-| Default Channel (GA) | v4.20 | *(auto)* | Source | 6 | 6 (100%) | 0 | 🟢 **PASSED** |
 | ODF (PreGA v4.21) | v4.21 | stable-4.21 | IDMS | 30 | 20 (67%) | 10 | 🔴 **FAILED** |
 | ACM (PreGA v4.21) | v4.21 | release-2.16 | IDMS | 104 | 21 (20%) | 83 | 🔴 **FAILED** |
 | RAN (PreGA v4.21) | v4.21 | stable/stable-6.4 | IDMS | 38 | 37 (97%) | 1 | 🟡 **FAILED** |
@@ -173,54 +172,6 @@ All GA tests passed with 100% image availability.
 ```
 
 **Operators included:** ptp-operator, local-storage-operator, sriov-network-operator, cluster-logging (with loki-operator), lifecycle-agent, redhat-oadp-operator
-
----
-
-### 4. Default Channel Test (No Channel Specified)
-
-This test demonstrates that when no channel is specified, the tool automatically uses each operator's default channel.
-
-**Command:**
-```bash
-./operator-images-validator.sh validate \
-  --catalog registry.redhat.io/redhat/redhat-operator-index:v4.20 \
-  --operators odf-operator,ptp-operator \
-  --no-deps
-```
-
-**Result:**
-```
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-  📋 Operator Image Validation Report
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  📦 Catalog:   registry.redhat.io/redhat/redhat-operator-index:v4.20
-  🔄 Mode:      Source Registry (GA Release)
-  🔧 Operators: odf-operator(stable-4.20)
-                ptp-operator(stable)
-  📅 Date:      2026-02-01 03:55:20 UTC
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ✅ Status: PASSED
-
-  📊 Summary:
-     Total Images:     6
-     ✓ Available:      6 (100.0%)
-     ✗ Missing:        0 (0.0%)
-
-  ████████████████████████████████████████████████████████████ 100.0%
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ✅ All images are available!
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-```
-
-**Note:** The report shows that:
-- `odf-operator` → automatically resolved to `stable-4.20` (default channel)
-- `ptp-operator` → automatically resolved to `stable` (default channel)
 
 ---
 
@@ -621,12 +572,6 @@ To fix the PreGA failures, add the missing mirrors to the IDMS file. Generate re
 ./operator-images-validator.sh validate \
   --catalog registry.redhat.io/redhat/redhat-operator-index:v4.20 \
   --operators ptp-operator:stable,local-storage-operator:stable,sriov-network-operator:stable,cluster-logging:stable-6.4,lifecycle-agent:stable,redhat-oadp-operator:stable
-
-# GA - Default Channel (no channel specified)
-./operator-images-validator.sh validate \
-  --catalog registry.redhat.io/redhat/redhat-operator-index:v4.20 \
-  --operators odf-operator,ptp-operator \
-  --no-deps
 
 # PreGA v4.21 - ODF
 ./operator-images-validator.sh validate \
