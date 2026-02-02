@@ -11,8 +11,8 @@ This document contains validation reports for OpenShift operator images using th
 | Parameter | GA Tests | PreGA v4.21 | PreGA v4.22 |
 |-----------|----------|-------------|-------------|
 | Catalog | `registry.redhat.io/redhat/redhat-operator-index:v4.20` | `quay.io/prega/prega-operator-index:v4.21-20260202T055019` | `quay.io/prega/prega-operator-index:v4.22-20260202T095851` |
-| Mode | Source Registry (GA Release) | Source Registry (PreGA) | Source Registry (PreGA) |
-| IDMS File | N/A | N/A | N/A |
+| Mode | Source Registry (GA Release) | IDMS Mirror Mapping | IDMS Mirror Mapping |
+| IDMS File | N/A | `prega-idms-4.21.yaml` (461 mappings) | `prega-idms-4.22.yaml` (478 mappings) |
 
 ### Results Summary
 
@@ -30,22 +30,22 @@ This document contains validation reports for OpenShift operator images using th
 | | | cluster-logging:stable-6.4 | Source | 12 | 12 (100%) | 0 | 🟢 **PASSED** |
 | | | lifecycle-agent:stable | Source | 3 | 3 (100%) | 0 | 🟢 **PASSED** |
 | | | redhat-oadp-operator:stable | Source | 7 | 7 (100%) | 0 | 🟢 **PASSED** |
-| ODF (PreGA v4.21) | v4.21 | odf-operator:stable-4.21 | Source | 30 | 13 (43%) | 17 | 🔴 **FAILED** |
-| ACM (PreGA v4.21) | v4.21 | advanced-cluster-management:release-2.16 | Source | 105 | 19 (18%) | 86 | 🔴 **FAILED** |
-| RAN (PreGA v4.21) | v4.21 | ptp-operator:stable | Source | 5 | 0 (0%) | 5 | 🔴 **FAILED** |
-| | | local-storage-operator:stable | Source | 4 | 0 (0%) | 4 | 🔴 **FAILED** |
-| | | sriov-network-operator:stable | Source | 10 | 0 (0%) | 10 | 🔴 **FAILED** |
-| | | cluster-logging:stable-6.4 | Source | 3 | 3 (100%) | 0 | 🟢 **PASSED** |
-| | | lifecycle-agent:stable | Source | 2 | 0 (0%) | 2 | 🔴 **FAILED** |
-| | | redhat-oadp-operator:stable | Source | 11 | 11 (100%) | 0 | 🟢 **PASSED** |
-| ODF (PreGA v4.22) | v4.22 | odf-operator:stable-4.22 | Source | 30 | 14 (47%) | 16 | 🔴 **FAILED** |
-| ACM (PreGA v4.22) | v4.22 | advanced-cluster-management:release-2.16 | Source | 105 | 19 (18%) | 86 | 🔴 **FAILED** |
-| RAN (PreGA v4.22) | v4.22 | ptp-operator:stable | Source | 5 | 0 (0%) | 5 | 🔴 **FAILED** |
-| | | local-storage-operator:stable | Source | 4 | 0 (0%) | 4 | 🔴 **FAILED** |
-| | | sriov-network-operator:stable | Source | 10 | 0 (0%) | 10 | 🔴 **FAILED** |
-| | | cluster-logging:stable-6.2 | Source | 3 | 0 (0%) | 3 | 🔴 **FAILED** |
-| | | lifecycle-agent:stable | Source | 2 | 0 (0%) | 2 | 🔴 **FAILED** |
-| | | redhat-oadp-operator:stable | Source | 11 | 11 (100%) | 0 | 🟢 **PASSED** |
+| ODF (PreGA v4.21) | v4.21 | odf-operator:stable-4.21 | IDMS | 30 | 22 (73%) | 8 | 🔴 **FAILED** |
+| ACM (PreGA v4.21) | v4.21 | advanced-cluster-management:release-2.16 | IDMS | 105 | 19 (18%) | 86 | 🔴 **FAILED** |
+| RAN (PreGA v4.21) | v4.21 | ptp-operator:stable | IDMS | 5 | 4 (80%) | 1 | 🔴 **FAILED** |
+| | | local-storage-operator:stable | IDMS | 4 | 3 (75%) | 1 | 🔴 **FAILED** |
+| | | sriov-network-operator:stable | IDMS | 10 | 9 (90%) | 1 | 🟡 **FAILED** |
+| | | cluster-logging:stable-6.4 | IDMS | 3 | 3 (100%) | 0 | 🟢 **PASSED** |
+| | | lifecycle-agent:stable | IDMS | 2 | 2 (100%) | 0 | 🟢 **PASSED** |
+| | | redhat-oadp-operator:stable | IDMS | 11 | 11 (100%) | 0 | 🟢 **PASSED** |
+| ODF (PreGA v4.22) | v4.22 | odf-operator:stable-4.22 | IDMS | 30 | 22 (73%) | 8 | 🔴 **FAILED** |
+| ACM (PreGA v4.22) | v4.22 | advanced-cluster-management:release-2.16 | IDMS | 105 | 19 (18%) | 86 | 🔴 **FAILED** |
+| RAN (PreGA v4.22) | v4.22 | ptp-operator:stable | IDMS | 5 | 4 (80%) | 1 | 🔴 **FAILED** |
+| | | local-storage-operator:stable | IDMS | 4 | 3 (75%) | 1 | 🔴 **FAILED** |
+| | | sriov-network-operator:stable | IDMS | 10 | 9 (90%) | 1 | 🟡 **FAILED** |
+| | | cluster-logging:stable-6.2 | IDMS | 3 | 3 (100%) | 0 | 🟢 **PASSED** |
+| | | lifecycle-agent:stable | IDMS | 2 | 2 (100%) | 0 | 🟢 **PASSED** |
+| | | redhat-oadp-operator:stable | IDMS | 11 | 11 (100%) | 0 | 🟢 **PASSED** |
 
 > **Legend:** 🟢 100% available | 🟡 >90% available | 🔴 <90% available
 
@@ -190,14 +190,15 @@ All GA tests passed with 100% image availability.
 
 ## PreGA Release Tests (v4.22)
 
-PreGA tests validate images at the source registry (images not yet GA released).
+PreGA tests validate images using IDMS mirror mappings to the PreGA registry.
 
-### 1. ODF Operator (PreGA)
+### 1. ODF Operator (PreGA v4.22)
 
 **Command:**
 ```bash
 ./operator-images-validator.sh validate \
   --catalog quay.io/prega/prega-operator-index:v4.22-20260202T095851 \
+  --idms prega-idms-4.22.yaml \
   --operators odf-operator:stable-4.22
 ```
 
@@ -208,9 +209,10 @@ PreGA tests validate images at the source registry (images not yet GA released).
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   📦 Catalog:   quay.io/prega/prega-operator-index:v4.22-20260202T095851
-  🔄 Mode:      Source Registry (GA Release)
+  🔄 Mode:      IDMS Mirror Mapping
+  📄 IDMS:      prega-idms-4.22.yaml (459 mappings)
   🔧 Operators: odf-operator(stable-4.22)
-  📅 Date:      2026-02-02 14:53:30 UTC
+  📅 Date:      2026-02-02 15:16:02 UTC
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -218,35 +220,38 @@ PreGA tests validate images at the source registry (images not yet GA released).
 
   📊 Summary:
      Total Images:     30
-     ✓ Available:      14 (46.7%)
-     ✗ Missing:        16 (53.3%)
+     ✓ Available:      22 (73.3%)
+     ✗ Missing:        8 (26.7%)
 
-  ████████████████████████████░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░ 46.7%
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ❌ Missing Images (16):
-
-     • registry.redhat.io/odf4/cephcsi-rhel9-operator@sha256:e01c09106fe6c5d5cf31deadebd1bb936a42b777db181983915a3a9a63dd7c1f
-     • registry.redhat.io/odf4/cephcsi-rhel9@sha256:05ce8093020758a54d2d54a840d81c3b634f075210704e81e1e9b2fdf9623f51
-     • registry.redhat.io/odf4/devicefinder-rhel9@sha256:a3cc3bdd92f79195ad5c006db0037ef1c5d2685133d24a3ac499d63ff5eb1198
-     • ... (16 total missing images)
+  ██████████████████████████████████████████████░░░░░░░░░░░░░░ 73.3%
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  💡 Tip: Run with --output-format=remediation to generate mirror commands.
+  ❌ Missing Images (8):
+
+     • registry.redhat.io/openshift4/ose-kube-rbac-proxy-rhel9@sha256:...
+     • registry.redhat.io/openshift4/ose-oauth-proxy-rhel9@sha256:...
+     • registry.redhat.io/openshift4/ose-prometheus-alertmanager-rhel9@sha256:...
+     • registry.redhat.io/openshift4/ose-prometheus-config-reloader-rhel9@sha256:...
+     • registry.redhat.io/openshift4/ose-prometheus-rhel9-operator@sha256:...
+     • registry.redhat.io/openshift4/ose-prometheus-rhel9@sha256:...
+     • registry.redhat.io/rhceph/rhceph-9-rhel9@sha256:...
+     • registry.redhat.io/rhel8/postgresql-12@sha256:...
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ```
 
-**Note:** ODF has 16 missing images - these are PreGA images not yet published to the GA registry.
+**Note:** ODF has 8 missing images - these are common OpenShift infrastructure images (prometheus, oauth-proxy, kube-rbac-proxy) not included in the IDMS file.
 
 ---
 
-### 2. ACM Operator (PreGA)
+### 2. ACM Operator (PreGA v4.22)
 
 **Command:**
 ```bash
 ./operator-images-validator.sh validate \
   --catalog quay.io/prega/prega-operator-index:v4.22-20260202T095851 \
+  --idms prega-idms-4.22.yaml \
   --operators advanced-cluster-management:release-2.16
 ```
 
@@ -257,9 +262,10 @@ PreGA tests validate images at the source registry (images not yet GA released).
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   📦 Catalog:   quay.io/prega/prega-operator-index:v4.22-20260202T095851
-  🔄 Mode:      Source Registry (GA Release)
+  🔄 Mode:      IDMS Mirror Mapping
+  📄 IDMS:      prega-idms-4.22.yaml (459 mappings)
   🔧 Operators: advanced-cluster-management(release-2.16)
-  📅 Date:      2026-02-02 14:53:49 UTC
+  📅 Date:      2026-02-02 15:15:55 UTC
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -276,21 +282,22 @@ PreGA tests validate images at the source registry (images not yet GA released).
 
   ❌ Missing Images (86):
 
-     • registry.redhat.io/multicluster-engine/addon-manager-rhel9@sha256:e7c19076e9e68c8e07b78e1607a0586381ca3fe01bfdb2d460a0099614a99edd
-     • registry.redhat.io/multicluster-engine/assisted-image-service-rhel9@sha256:5f41abafe6e982b22353fd41fe01be9da4ea480fe412124b3f88f75c69b310aa
-     • ... (86 total missing images)
+     • registry.redhat.io/multicluster-engine/addon-manager-rhel9@sha256:...
+     • registry.redhat.io/multicluster-engine/assisted-image-service-rhel9@sha256:...
+     • ... (86 total missing images from multicluster-engine and rhacm2 namespaces)
 ```
 
-**Note:** ACM has 86 missing images - these are PreGA images not yet published to the GA registry.
+**Note:** ACM has 86 missing images - the IDMS file is missing mappings for multicluster-engine and rhacm2 namespaces.
 
 ---
 
-### 3. RAN Operators (PreGA)
+### 3. RAN Operators (PreGA v4.22)
 
 **Command:**
 ```bash
 ./operator-images-validator.sh validate \
   --catalog quay.io/prega/prega-operator-index:v4.22-20260202T095851 \
+  --idms prega-idms-4.22.yaml \
   --operators ptp-operator:stable,local-storage-operator:stable,sriov-network-operator:stable,cluster-logging:stable-6.2,lifecycle-agent:stable,redhat-oadp-operator:stable \
   --no-deps
 ```
@@ -299,48 +306,20 @@ PreGA tests validate images at the source registry (images not yet GA released).
 
 | Operator | Total | Available | Missing | Status |
 |----------|-------|-----------|---------|--------|
-| ptp-operator:stable | 5 | 0 (0%) | 5 | 🔴 **FAILED** |
-| local-storage-operator:stable | 4 | 0 (0%) | 4 | 🔴 **FAILED** |
-| sriov-network-operator:stable | 10 | 0 (0%) | 10 | 🔴 **FAILED** |
-| cluster-logging:stable-6.2 | 3 | 0 (0%) | 3 | 🔴 **FAILED** |
-| lifecycle-agent:stable | 2 | 0 (0%) | 2 | 🔴 **FAILED** |
+| ptp-operator:stable | 5 | 4 (80%) | 1 | 🔴 **FAILED** |
+| local-storage-operator:stable | 4 | 3 (75%) | 1 | 🔴 **FAILED** |
+| sriov-network-operator:stable | 10 | 9 (90%) | 1 | 🟡 **FAILED** |
+| cluster-logging:stable-6.2 | 3 | 3 (100%) | 0 | 🟢 **PASSED** |
+| lifecycle-agent:stable | 2 | 2 (100%) | 0 | 🟢 **PASSED** |
 | redhat-oadp-operator:stable | 11 | 11 (100%) | 0 | 🟢 **PASSED** |
 
-**Note:** Only redhat-oadp-operator has all images available. Other RAN operators have PreGA images not yet published to the GA registry.
-
-```
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-  📋 Operator Image Validation Report (redhat-oadp-operator)
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  📦 Catalog:   quay.io/prega/prega-operator-index:v4.22-20260202T095851
-  🔄 Mode:      Source Registry (GA Release)
-  🔧 Operators: redhat-oadp-operator(stable)
-  📅 Date:      2026-02-02 14:54:09 UTC
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ✅ Status: PASSED
-
-  📊 Summary:
-     Total Images:     11
-     ✓ Available:      11 (100.0%)
-     ✗ Missing:        0 (0.0%)
-
-  ████████████████████████████████████████████████████████████ 100.0%
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ✅ All images are available!
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-```
+**Note:** The missing image across ptp, local-storage, and sriov operators is `ose-kube-rbac-proxy-rhel9` - a common OpenShift infrastructure image not included in the IDMS file.
 
 ---
 
 ## PreGA Release Tests (v4.21)
 
-PreGA tests validate images at the source registry (images not yet GA released).
+PreGA tests validate images using IDMS mirror mappings to the PreGA registry.
 
 ### 1. ODF Operator (PreGA v4.21)
 
@@ -348,6 +327,7 @@ PreGA tests validate images at the source registry (images not yet GA released).
 ```bash
 ./operator-images-validator.sh validate \
   --catalog quay.io/prega/prega-operator-index:v4.21-20260202T055019 \
+  --idms prega-idms-4.21.yaml \
   --operators odf-operator:stable-4.21
 ```
 
@@ -358,9 +338,10 @@ PreGA tests validate images at the source registry (images not yet GA released).
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   📦 Catalog:   quay.io/prega/prega-operator-index:v4.21-20260202T055019
-  🔄 Mode:      Source Registry (GA Release)
+  🔄 Mode:      IDMS Mirror Mapping
+  📄 IDMS:      prega-idms-4.21.yaml (442 mappings)
   🔧 Operators: odf-operator(stable-4.21)
-  📅 Date:      2026-02-02 15:01:15 UTC
+  📅 Date:      2026-02-02 15:15:15 UTC
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -368,25 +349,28 @@ PreGA tests validate images at the source registry (images not yet GA released).
 
   📊 Summary:
      Total Images:     30
-     ✓ Available:      13 (43.3%)
-     ✗ Missing:        17 (56.7%)
+     ✓ Available:      22 (73.3%)
+     ✗ Missing:        8 (26.7%)
 
-  ██████████████████████████░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░ 43.3%
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ❌ Missing Images (17):
-
-     • registry.redhat.io/odf4/cephcsi-rhel9-operator@sha256:f0ddf6f8faf8a1d274bf427694a565a035e114815c063fac81a8a501d6fc2f87
-     • registry.redhat.io/odf4/cephcsi-rhel9@sha256:2aacc7df35fb90d19f035a0cbe4ffdbf3191b3533955290a4042c67cbed91f10
-     • ... (17 total missing images)
+  ██████████████████████████████████████████████░░░░░░░░░░░░░░ 73.3%
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  💡 Tip: Run with --output-format=remediation to generate mirror commands.
+  ❌ Missing Images (8):
+
+     • registry.redhat.io/openshift4/ose-kube-rbac-proxy-rhel9@sha256:e5bb9eca4e9d9c3a55d04695edf6c1d9f571bd86341f8d2a7132a951dae67bd7
+     • registry.redhat.io/openshift4/ose-oauth-proxy-rhel9@sha256:fbd2fe6c6f19065e416957243275cd12254dd47ecffc1363b77475797559b56c
+     • registry.redhat.io/openshift4/ose-prometheus-alertmanager-rhel9@sha256:...
+     • registry.redhat.io/openshift4/ose-prometheus-config-reloader-rhel9@sha256:...
+     • registry.redhat.io/openshift4/ose-prometheus-rhel9-operator@sha256:...
+     • registry.redhat.io/openshift4/ose-prometheus-rhel9@sha256:...
+     • registry.redhat.io/rhceph/rhceph-9-rhel9@sha256:...
+     • registry.redhat.io/rhel8/postgresql-12@sha256:...
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ```
 
-**Note:** ODF has 17 missing images - these are PreGA images not yet published to the GA registry.
+**Note:** ODF has 8 missing images - these are common OpenShift infrastructure images (prometheus, oauth-proxy, kube-rbac-proxy) not included in the IDMS file.
 
 ---
 
@@ -396,6 +380,7 @@ PreGA tests validate images at the source registry (images not yet GA released).
 ```bash
 ./operator-images-validator.sh validate \
   --catalog quay.io/prega/prega-operator-index:v4.21-20260202T055019 \
+  --idms prega-idms-4.21.yaml \
   --operators advanced-cluster-management:release-2.16
 ```
 
@@ -406,9 +391,10 @@ PreGA tests validate images at the source registry (images not yet GA released).
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   📦 Catalog:   quay.io/prega/prega-operator-index:v4.21-20260202T055019
-  🔄 Mode:      Source Registry (GA Release)
+  🔄 Mode:      IDMS Mirror Mapping
+  📄 IDMS:      prega-idms-4.21.yaml (442 mappings)
   🔧 Operators: advanced-cluster-management(release-2.16)
-  📅 Date:      2026-02-02 15:01:37 UTC
+  📅 Date:      2026-02-02 15:15:09 UTC
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -425,12 +411,12 @@ PreGA tests validate images at the source registry (images not yet GA released).
 
   ❌ Missing Images (86):
 
-     • registry.redhat.io/multicluster-engine/addon-manager-rhel9@sha256:e7c19076e9e68c8e07b78e1607a0586381ca3fe01bfdb2d460a0099614a99edd
-     • registry.redhat.io/multicluster-engine/assisted-image-service-rhel9@sha256:5f41abafe6e982b22353fd41fe01be9da4ea480fe412124b3f88f75c69b310aa
-     • ... (86 total missing images)
+     • registry.redhat.io/multicluster-engine/addon-manager-rhel9@sha256:...
+     • registry.redhat.io/multicluster-engine/assisted-image-service-rhel9@sha256:...
+     • ... (86 total missing images from multicluster-engine and rhacm2 namespaces)
 ```
 
-**Note:** ACM has 86 missing images - these are PreGA images not yet published to the GA registry.
+**Note:** ACM has 86 missing images - the IDMS file is missing mappings for multicluster-engine and rhacm2 namespaces.
 
 ---
 
@@ -440,6 +426,7 @@ PreGA tests validate images at the source registry (images not yet GA released).
 ```bash
 ./operator-images-validator.sh validate \
   --catalog quay.io/prega/prega-operator-index:v4.21-20260202T055019 \
+  --idms prega-idms-4.21.yaml \
   --operators ptp-operator:stable,local-storage-operator:stable,sriov-network-operator:stable,cluster-logging:stable-6.4,lifecycle-agent:stable,redhat-oadp-operator:stable \
   --no-deps
 ```
@@ -448,14 +435,14 @@ PreGA tests validate images at the source registry (images not yet GA released).
 
 | Operator | Total | Available | Missing | Status |
 |----------|-------|-----------|---------|--------|
-| ptp-operator:stable | 5 | 0 (0%) | 5 | 🔴 **FAILED** |
-| local-storage-operator:stable | 4 | 0 (0%) | 4 | 🔴 **FAILED** |
-| sriov-network-operator:stable | 10 | 0 (0%) | 10 | 🔴 **FAILED** |
+| ptp-operator:stable | 5 | 4 (80%) | 1 | 🔴 **FAILED** |
+| local-storage-operator:stable | 4 | 3 (75%) | 1 | 🔴 **FAILED** |
+| sriov-network-operator:stable | 10 | 9 (90%) | 1 | 🟡 **FAILED** |
 | cluster-logging:stable-6.4 | 3 | 3 (100%) | 0 | 🟢 **PASSED** |
-| lifecycle-agent:stable | 2 | 0 (0%) | 2 | 🔴 **FAILED** |
+| lifecycle-agent:stable | 2 | 2 (100%) | 0 | 🟢 **PASSED** |
 | redhat-oadp-operator:stable | 11 | 11 (100%) | 0 | 🟢 **PASSED** |
 
-**Note:** Only cluster-logging and redhat-oadp-operator have all images available. Other RAN operators have PreGA images not yet published to the GA registry.
+**Note:** The missing image across ptp, local-storage, and sriov operators is `ose-kube-rbac-proxy-rhel9` - a common OpenShift infrastructure image not included in the IDMS file.
 
 ```
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -491,28 +478,28 @@ PreGA tests validate images at the source registry (images not yet GA released).
 
 ### ODF Operator - All Available Channels
 
-| Catalog | Channel | Total | Available | Missing | Status |
-|---------|---------|-------|-----------|---------|--------|
-| GA v4.20 | stable-4.19 | 28 | 28 (100%) | 0 | 🟢 **PASSED** |
-| GA v4.20 | stable-4.20 | 28 | 28 (100%) | 0 | 🟢 **PASSED** |
-| PreGA v4.21 | stable-4.21 | 30 | 13 (43%) | 17 | 🔴 **FAILED** |
-| PreGA v4.22 | stable-4.22 | 30 | 14 (47%) | 16 | 🔴 **FAILED** |
+| Catalog | Channel | Mode | Total | Available | Missing | Status |
+|---------|---------|------|-------|-----------|---------|--------|
+| GA v4.20 | stable-4.19 | Source | 28 | 28 (100%) | 0 | 🟢 **PASSED** |
+| GA v4.20 | stable-4.20 | Source | 28 | 28 (100%) | 0 | 🟢 **PASSED** |
+| PreGA v4.21 | stable-4.21 | IDMS | 30 | 22 (73%) | 8 | 🔴 **FAILED** |
+| PreGA v4.22 | stable-4.22 | IDMS | 30 | 22 (73%) | 8 | 🔴 **FAILED** |
 
 ### ACM Operator - All Available Channels
 
-| Catalog | Channel | Total | Available | Missing | Status |
-|---------|---------|-------|-----------|---------|--------|
-| GA v4.20 | release-2.14 | 96 | 96 (100%) | 0 | 🟢 **PASSED** |
-| GA v4.20 | release-2.15 | 104 | 104 (100%) | 0 | 🟢 **PASSED** |
-| PreGA v4.21 | release-2.16 | 105 | 19 (18%) | 86 | 🔴 **FAILED** |
-| PreGA v4.22 | release-2.16 | 105 | 19 (18%) | 86 | 🔴 **FAILED** |
+| Catalog | Channel | Mode | Total | Available | Missing | Status |
+|---------|---------|------|-------|-----------|---------|--------|
+| GA v4.20 | release-2.14 | Source | 96 | 96 (100%) | 0 | 🟢 **PASSED** |
+| GA v4.20 | release-2.15 | Source | 104 | 104 (100%) | 0 | 🟢 **PASSED** |
+| PreGA v4.21 | release-2.16 | IDMS | 105 | 19 (18%) | 86 | 🔴 **FAILED** |
+| PreGA v4.22 | release-2.16 | IDMS | 105 | 19 (18%) | 86 | 🔴 **FAILED** |
 
 ### Key Findings
 
 - **GA releases (v4.20)**: All channels pass with 100% image availability
-- **PreGA ODF**: ~43-47% availability - missing ODF4 namespace images not yet published
-- **PreGA ACM**: Only ~18% availability - significant gaps in multicluster-engine and rhacm2 namespace images
-- **PreGA RAN**: Most operators have 0% availability except cluster-logging and redhat-oadp-operator (100%)
+- **PreGA ODF with IDMS**: 73% availability - missing common OpenShift infrastructure images (prometheus, kube-rbac-proxy)
+- **PreGA ACM with IDMS**: Only 18% availability - IDMS file missing multicluster-engine and rhacm2 namespace mappings
+- **PreGA RAN with IDMS**: Most operators reach 75-100% availability; missing image is `ose-kube-rbac-proxy-rhel9`
 
 ---
 
@@ -574,73 +561,89 @@ To fix the PreGA failures, add the missing mirrors to the IDMS file. Generate re
   --catalog registry.redhat.io/redhat/redhat-operator-index:v4.20 \
   --operators ptp-operator:stable,local-storage-operator:stable,sriov-network-operator:stable,cluster-logging:stable-6.4,lifecycle-agent:stable,redhat-oadp-operator:stable
 
-# PreGA v4.21 - ODF
+# PreGA v4.21 - ODF (with IDMS)
 ./operator-images-validator.sh validate \
   --catalog quay.io/prega/prega-operator-index:v4.21-20260202T055019 \
+  --idms prega-idms-4.21.yaml \
   --operators odf-operator:stable-4.21
 
-# PreGA v4.21 - ACM
+# PreGA v4.21 - ACM (with IDMS)
 ./operator-images-validator.sh validate \
   --catalog quay.io/prega/prega-operator-index:v4.21-20260202T055019 \
+  --idms prega-idms-4.21.yaml \
   --operators advanced-cluster-management:release-2.16
 
-# PreGA v4.21 - RAN (individual operators)
+# PreGA v4.21 - RAN (with IDMS, individual operators)
 ./operator-images-validator.sh validate \
   --catalog quay.io/prega/prega-operator-index:v4.21-20260202T055019 \
+  --idms prega-idms-4.21.yaml \
   --operators ptp-operator:stable --no-deps
 
 ./operator-images-validator.sh validate \
   --catalog quay.io/prega/prega-operator-index:v4.21-20260202T055019 \
+  --idms prega-idms-4.21.yaml \
   --operators local-storage-operator:stable --no-deps
 
 ./operator-images-validator.sh validate \
   --catalog quay.io/prega/prega-operator-index:v4.21-20260202T055019 \
+  --idms prega-idms-4.21.yaml \
   --operators sriov-network-operator:stable --no-deps
 
 ./operator-images-validator.sh validate \
   --catalog quay.io/prega/prega-operator-index:v4.21-20260202T055019 \
+  --idms prega-idms-4.21.yaml \
   --operators cluster-logging:stable-6.4 --no-deps
 
 ./operator-images-validator.sh validate \
   --catalog quay.io/prega/prega-operator-index:v4.21-20260202T055019 \
+  --idms prega-idms-4.21.yaml \
   --operators lifecycle-agent:stable --no-deps
 
 ./operator-images-validator.sh validate \
   --catalog quay.io/prega/prega-operator-index:v4.21-20260202T055019 \
+  --idms prega-idms-4.21.yaml \
   --operators redhat-oadp-operator:stable --no-deps
 
-# PreGA v4.22 - ODF
+# PreGA v4.22 - ODF (with IDMS)
 ./operator-images-validator.sh validate \
   --catalog quay.io/prega/prega-operator-index:v4.22-20260202T095851 \
+  --idms prega-idms-4.22.yaml \
   --operators odf-operator:stable-4.22
 
-# PreGA v4.22 - ACM
+# PreGA v4.22 - ACM (with IDMS)
 ./operator-images-validator.sh validate \
   --catalog quay.io/prega/prega-operator-index:v4.22-20260202T095851 \
+  --idms prega-idms-4.22.yaml \
   --operators advanced-cluster-management:release-2.16
 
-# PreGA v4.22 - RAN (individual operators)
+# PreGA v4.22 - RAN (with IDMS, individual operators)
 ./operator-images-validator.sh validate \
   --catalog quay.io/prega/prega-operator-index:v4.22-20260202T095851 \
+  --idms prega-idms-4.22.yaml \
   --operators ptp-operator:stable --no-deps
 
 ./operator-images-validator.sh validate \
   --catalog quay.io/prega/prega-operator-index:v4.22-20260202T095851 \
+  --idms prega-idms-4.22.yaml \
   --operators local-storage-operator:stable --no-deps
 
 ./operator-images-validator.sh validate \
   --catalog quay.io/prega/prega-operator-index:v4.22-20260202T095851 \
+  --idms prega-idms-4.22.yaml \
   --operators sriov-network-operator:stable --no-deps
 
 ./operator-images-validator.sh validate \
   --catalog quay.io/prega/prega-operator-index:v4.22-20260202T095851 \
+  --idms prega-idms-4.22.yaml \
   --operators cluster-logging:stable-6.2 --no-deps
 
 ./operator-images-validator.sh validate \
   --catalog quay.io/prega/prega-operator-index:v4.22-20260202T095851 \
+  --idms prega-idms-4.22.yaml \
   --operators lifecycle-agent:stable --no-deps
 
 ./operator-images-validator.sh validate \
   --catalog quay.io/prega/prega-operator-index:v4.22-20260202T095851 \
+  --idms prega-idms-4.22.yaml \
   --operators redhat-oadp-operator:stable --no-deps
 ```
