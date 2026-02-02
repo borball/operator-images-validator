@@ -16,38 +16,38 @@ This document contains validation reports for OpenShift operator images using th
 
 ### Results Summary
 
-| Test | Catalog Version | Channel | Mode | Total | Available | Missing | Status |
-|------|----------------|---------|------|-------|-----------|---------|--------|
-| ODF (GA) | v4.20 | stable-4.19 | Source | 28 | 28 (100%) | 0 | 🟢 **PASSED** |
-| ODF (GA) | v4.20 | stable-4.20 | Source | 28 | 28 (100%) | 0 | 🟢 **PASSED** |
-| ACM (GA) | v4.20 | release-2.14 | Source | 96 | 96 (100%) | 0 | 🟢 **PASSED** |
-| ACM (GA) | v4.20 | release-2.15 | Source | 104 | 104 (100%) | 0 | 🟢 **PASSED** |
-| ptp-operator (GA) | v4.20 | stable | Source | 4 | 4 (100%) | 0 | 🟢 **PASSED** |
-| local-storage-operator (GA) | v4.20 | stable | Source | 4 | 4 (100%) | 0 | 🟢 **PASSED** |
-| sriov-network-operator (GA) | v4.20 | stable | Source | 7 | 7 (100%) | 0 | 🟢 **PASSED** |
-| cluster-logging (GA) | v4.20 | stable-6.4 | Source | 12 | 12 (100%) | 0 | 🟢 **PASSED** |
-| lifecycle-agent (GA) | v4.20 | stable | Source | 3 | 3 (100%) | 0 | 🟢 **PASSED** |
-| redhat-oadp-operator (GA) | v4.20 | stable | Source | 7 | 7 (100%) | 0 | 🟢 **PASSED** |
-| ODF (PreGA v4.21) | v4.21 | stable-4.21 | IDMS | 30 | 20 (67%) | 10 | 🔴 **FAILED** |
-| ACM (PreGA v4.21) | v4.21 | release-2.16 | IDMS | 104 | 21 (20%) | 83 | 🔴 **FAILED** |
-| ptp-operator (PreGA v4.21) | v4.21 | stable | IDMS | 4 | 4 (100%) | 0 | 🟢 **PASSED** |
-| local-storage-operator (PreGA v4.21) | v4.21 | stable | IDMS | 4 | 4 (100%) | 0 | 🟢 **PASSED** |
-| sriov-network-operator (PreGA v4.21) | v4.21 | stable | IDMS | 7 | 7 (100%) | 0 | 🟢 **PASSED** |
-| cluster-logging (PreGA v4.21) | v4.21 | stable-6.4 | IDMS | 13 | 12 (92%) | 1 | 🟡 **FAILED** |
-| lifecycle-agent (PreGA v4.21) | v4.21 | stable | IDMS | 3 | 3 (100%) | 0 | 🟢 **PASSED** |
-| redhat-oadp-operator (PreGA v4.21) | v4.21 | stable | IDMS | 7 | 7 (100%) | 0 | 🟢 **PASSED** |
-| ODF (PreGA v4.22) | v4.22 | stable-4.20 | IDMS | 29 | 23 (79%) | 6 | 🔴 **FAILED** |
-| ODF (PreGA v4.22) | v4.22 | stable-4.21 | IDMS | 32 | 25 (78%) | 7 | 🔴 **FAILED** |
-| ODF (PreGA v4.22) | v4.22 | stable-4.22 | IDMS | 31 | 24 (77%) | 7 | 🔴 **FAILED** |
-| ACM (PreGA v4.22) | v4.22 | release-2.14 | IDMS | 97 | 15 (15%) | 82 | 🔴 **FAILED** |
-| ACM (PreGA v4.22) | v4.22 | release-2.15 | IDMS | 105 | 21 (20%) | 84 | 🔴 **FAILED** |
-| ACM (PreGA v4.22) | v4.22 | release-2.16 | IDMS | 105 | 21 (20%) | 84 | 🔴 **FAILED** |
-| ptp-operator (PreGA v4.22) | v4.22 | stable | IDMS | 4 | 4 (100%) | 0 | 🟢 **PASSED** |
-| local-storage-operator (PreGA v4.22) | v4.22 | stable | IDMS | 4 | 4 (100%) | 0 | 🟢 **PASSED** |
-| sriov-network-operator (PreGA v4.22) | v4.22 | stable | IDMS | 7 | 7 (100%) | 0 | 🟢 **PASSED** |
-| cluster-logging (PreGA v4.22) | v4.22 | stable-6.2 | IDMS | 13 | 12 (92%) | 1 | 🟡 **FAILED** |
-| lifecycle-agent (PreGA v4.22) | v4.22 | stable | IDMS | 3 | 3 (100%) | 0 | 🟢 **PASSED** |
-| redhat-oadp-operator (PreGA v4.22) | v4.22 | stable | IDMS | 7 | 7 (100%) | 0 | 🟢 **PASSED** |
+| Test | Catalog Version | Operator:Channel | Mode | Total | Available | Missing | Status |
+|------|----------------|------------------|------|-------|-----------|---------|--------|
+| ODF (GA) | v4.20 | odf-operator:stable-4.19 | Source | 28 | 28 (100%) | 0 | 🟢 **PASSED** |
+| ODF (GA) | v4.20 | odf-operator:stable-4.20 | Source | 28 | 28 (100%) | 0 | 🟢 **PASSED** |
+| ACM (GA) | v4.20 | advanced-cluster-management:release-2.14 | Source | 96 | 96 (100%) | 0 | 🟢 **PASSED** |
+| ACM (GA) | v4.20 | advanced-cluster-management:release-2.15 | Source | 104 | 104 (100%) | 0 | 🟢 **PASSED** |
+| RAN (GA) | v4.20 | ptp-operator:stable | Source | 4 | 4 (100%) | 0 | 🟢 **PASSED** |
+| | | local-storage-operator:stable | Source | 4 | 4 (100%) | 0 | 🟢 **PASSED** |
+| | | sriov-network-operator:stable | Source | 7 | 7 (100%) | 0 | 🟢 **PASSED** |
+| | | cluster-logging:stable-6.4 | Source | 12 | 12 (100%) | 0 | 🟢 **PASSED** |
+| | | lifecycle-agent:stable | Source | 3 | 3 (100%) | 0 | 🟢 **PASSED** |
+| | | redhat-oadp-operator:stable | Source | 7 | 7 (100%) | 0 | 🟢 **PASSED** |
+| ODF (PreGA v4.21) | v4.21 | odf-operator:stable-4.21 | IDMS | 30 | 20 (67%) | 10 | 🔴 **FAILED** |
+| ACM (PreGA v4.21) | v4.21 | advanced-cluster-management:release-2.16 | IDMS | 104 | 21 (20%) | 83 | 🔴 **FAILED** |
+| RAN (PreGA v4.21) | v4.21 | ptp-operator:stable | IDMS | 4 | 4 (100%) | 0 | 🟢 **PASSED** |
+| | | local-storage-operator:stable | IDMS | 4 | 4 (100%) | 0 | 🟢 **PASSED** |
+| | | sriov-network-operator:stable | IDMS | 7 | 7 (100%) | 0 | 🟢 **PASSED** |
+| | | cluster-logging:stable-6.4 | IDMS | 13 | 12 (92%) | 1 | 🟡 **FAILED** |
+| | | lifecycle-agent:stable | IDMS | 3 | 3 (100%) | 0 | 🟢 **PASSED** |
+| | | redhat-oadp-operator:stable | IDMS | 7 | 7 (100%) | 0 | 🟢 **PASSED** |
+| ODF (PreGA v4.22) | v4.22 | odf-operator:stable-4.20 | IDMS | 29 | 23 (79%) | 6 | 🔴 **FAILED** |
+| ODF (PreGA v4.22) | v4.22 | odf-operator:stable-4.21 | IDMS | 32 | 25 (78%) | 7 | 🔴 **FAILED** |
+| ODF (PreGA v4.22) | v4.22 | odf-operator:stable-4.22 | IDMS | 31 | 24 (77%) | 7 | 🔴 **FAILED** |
+| ACM (PreGA v4.22) | v4.22 | advanced-cluster-management:release-2.14 | IDMS | 97 | 15 (15%) | 82 | 🔴 **FAILED** |
+| ACM (PreGA v4.22) | v4.22 | advanced-cluster-management:release-2.15 | IDMS | 105 | 21 (20%) | 84 | 🔴 **FAILED** |
+| ACM (PreGA v4.22) | v4.22 | advanced-cluster-management:release-2.16 | IDMS | 105 | 21 (20%) | 84 | 🔴 **FAILED** |
+| RAN (PreGA v4.22) | v4.22 | ptp-operator:stable | IDMS | 4 | 4 (100%) | 0 | 🟢 **PASSED** |
+| | | local-storage-operator:stable | IDMS | 4 | 4 (100%) | 0 | 🟢 **PASSED** |
+| | | sriov-network-operator:stable | IDMS | 7 | 7 (100%) | 0 | 🟢 **PASSED** |
+| | | cluster-logging:stable-6.2 | IDMS | 13 | 12 (92%) | 1 | 🟡 **FAILED** |
+| | | lifecycle-agent:stable | IDMS | 3 | 3 (100%) | 0 | 🟢 **PASSED** |
+| | | redhat-oadp-operator:stable | IDMS | 7 | 7 (100%) | 0 | 🟢 **PASSED** |
 
 > **Legend:** 🟢 100% available | 🟡 >90% available | 🔴 <90% available
 
