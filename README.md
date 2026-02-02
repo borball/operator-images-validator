@@ -11,6 +11,59 @@ A CLI tool to validate OpenShift operator images availability in container regis
 - **Remediation** - Generate `skopeo copy` commands for missing images
 - **Channel Validation** - Exit with error if specified channel doesn't exist
 
+## How It Works
+
+The script follows a multi-stage pipeline to extract and validate operator images:
+
+```
+┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
+│  1. Catalog     │───▶│  2. Operator    │───▶│  3. Image       │───▶│  4. Validation  │
+│   Extraction    │    │   Processing    │    │   Extraction    │    │   & Reporting   │
+└─────────────────┘    └─────────────────┘    └─────────────────┘    └─────────────────┘
+```
+
+### Stage 1: Catalog Extraction
+- Pulls the operator catalog image using `oc` or `podman`
+- Extracts catalog data to a temporary directory
+- Auto-detects catalog format (File-Based Catalog or SQLite)
+- Supports multiple FBC layouts: single-file, split, and hierarchical
+
+### Stage 2: Operator Processing
+- Parses `operator:channel` format (e.g., `odf-operator:stable-4.22`)
+- Validates that the specified operator and channel exist in the catalog
+- Resolves dependencies automatically (e.g., `odf-operator` includes `ocs-operator`, `mcg-operator`, etc.)
+- Extracts bundle image references for the specified channels
+
+### Stage 3: Image Extraction
+- Pulls each operator bundle image
+- Extracts manifests from the bundle (ClusterServiceVersion files)
+- Parses CSV files to find all container images from:
+  - `spec.relatedImages[]` - declared related images
+  - Deployment containers - operator and operand images
+  - Init containers - initialization images
+  - Environment variables - dynamically referenced images
+
+### Stage 4: Validation & Reporting
+- Validates each image exists using `skopeo inspect`
+- Supports three validation modes:
+  - **Source Registry (GA)**: validates directly at the source registry
+  - **IDMS Mode**: maps images using ImageDigestMirrorSet and validates at mirror
+  - **Target Registry**: validates against a specified mirror registry
+- Runs validations in parallel (default: 10 concurrent checks)
+- Generates reports in multiple formats: table, JSON, YAML, or remediation scripts
+
+### Key Functions
+
+| Function | Description |
+|----------|-------------|
+| `extract_index()` | Pulls and extracts the operator catalog container image |
+| `get_bundle_image_fbc()` | Retrieves the bundle image for a specific operator/channel |
+| `extract_images_from_bundle()` | Extracts all container images from an operator bundle CSV |
+| `check_image_exists()` | Validates an image exists using `skopeo inspect` |
+| `resolve_image_mirror()` | Maps a source image to its mirror location using IDMS |
+| `resolve_dependencies()` | Automatically includes dependent operators |
+| `parse_idms_file()` | Parses IDMS YAML and builds the mirror mapping dictionary |
+
 ## Requirements
 
 - `oc` - OpenShift CLI
@@ -40,7 +93,7 @@ chmod +x operator-images-validator.sh
   --idms prega-idms-4.22.yaml \
   --operators odf-operator:stable-4.22
 
-# Validate CloudRAN operators for Telco deployments
+# Validate RAN operators for Telco deployments
 ./operator-images-validator.sh validate \
   --catalog quay.io/prega/prega-operator-index:v4.22 \
   --idms prega-idms-4.22.yaml \
@@ -134,8 +187,8 @@ Use `--no-deps` to disable automatic dependency resolution.
 
 ## Common Operator Groups
 
-### CloudRAN / Telco Operators
-For CloudRAN and Telco deployments, commonly validated operators include:
+### RAN (Radio Access Network) Operators
+RAN refers to a set of several Telco operators commonly used for Radio Access Network deployments. For RAN and Telco deployments, commonly validated operators include:
 
 ```bash
 ./operator-images-validator.sh validate \

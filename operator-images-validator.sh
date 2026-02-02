@@ -75,7 +75,7 @@ declare -A OPERATOR_DEPENDENCIES=(
     # ODF (OpenShift Data Foundation) and its dependent operators
     ["odf-operator"]="ocs-operator,mcg-operator,odf-csi-addons-operator,rook-ceph-operator,odf-prometheus-operator,cephcsi-operator"
     
-    # RHACM (Red Hat Advanced Cluster Management) depends on MCE
+    # ACM (Advanced Cluster Management) depends on MCE
     ["advanced-cluster-management"]="multicluster-engine"
     
     # OpenShift Logging (cluster-logging) depends on these
