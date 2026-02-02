@@ -22,9 +22,36 @@ spec:
   - mirrors:
     - quay.io/prega/test/openshift4
     source: registry.stage.redhat.io/openshift4
+  # ODF dependencies: rhceph -> rhceph-dev namespace
   - mirrors:
-    - quay.io/prega/test/rhceph
+    - quay.io/prega/test/rhceph-dev
     source: registry.redhat.io/rhceph
+  # ODF dependencies: openshift4/ose-* -> try rhceph-dev/openshift-ose-* first, then openshift4/ose-*
+  # Some SHAs exist only in rhceph-dev, some only in openshift4
+  - mirrors:
+    - quay.io/prega/test/rhceph-dev/openshift-ose-kube-rbac-proxy-rhel9
+    - quay.io/prega/test/openshift4/ose-kube-rbac-proxy-rhel9
+    source: registry.redhat.io/openshift4/ose-kube-rbac-proxy-rhel9
+  - mirrors:
+    - quay.io/prega/test/rhceph-dev/openshift-ose-oauth-proxy-rhel9
+    - quay.io/prega/test/openshift4/ose-oauth-proxy-rhel9
+    source: registry.redhat.io/openshift4/ose-oauth-proxy-rhel9
+  - mirrors:
+    - quay.io/prega/test/rhceph-dev/openshift-ose-prometheus-rhel9
+    - quay.io/prega/test/openshift4/ose-prometheus-rhel9
+    source: registry.redhat.io/openshift4/ose-prometheus-rhel9
+  - mirrors:
+    - quay.io/prega/test/rhceph-dev/openshift-ose-prometheus-rhel9-operator
+    - quay.io/prega/test/openshift4/ose-prometheus-rhel9-operator
+    source: registry.redhat.io/openshift4/ose-prometheus-rhel9-operator
+  - mirrors:
+    - quay.io/prega/test/rhceph-dev/openshift-ose-prometheus-alertmanager-rhel9
+    - quay.io/prega/test/openshift4/ose-prometheus-alertmanager-rhel9
+    source: registry.redhat.io/openshift4/ose-prometheus-alertmanager-rhel9
+  - mirrors:
+    - quay.io/prega/test/rhceph-dev/openshift-ose-prometheus-config-reloader-rhel9
+    - quay.io/prega/test/openshift4/ose-prometheus-config-reloader-rhel9
+    source: registry.redhat.io/openshift4/ose-prometheus-config-reloader-rhel9
   - mirrors:
     - quay.io/prega/test/rhel8
     source: registry.redhat.io/rhel8

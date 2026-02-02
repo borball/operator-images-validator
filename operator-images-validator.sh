@@ -96,6 +96,7 @@ IDMS_FILE=""
 
 # Associative array to store IDMS mappings (source -> mirror)
 declare -A IDMS_MAPPINGS
+IDMS_MAPPING_COUNT=0
 
 # Associative array to store operator channels (operator -> channel)
 declare -A OPERATOR_CHANNELS
@@ -415,28 +416,31 @@ parse_idms_file() {
     log_info "Parsing IDMS file: $idms_file"
     
     # Parse IDMS YAML and extract source -> mirror mappings
-    # Format: source: registry.redhat.io/foo, mirrors: [quay.io/bar]
+    # Format: source: registry.redhat.io/foo, mirrors: [quay.io/bar, quay.io/baz]
+    # Store all mirrors separated by semicolon for fallback support
     local count=0
     
-    while IFS='|' read -r source mirror; do
-        [[ -z "$source" || -z "$mirror" ]] && continue
+    while IFS='|' read -r source mirrors; do
+        [[ -z "$source" || -z "$mirrors" ]] && continue
         
         # Remove any digest from source for matching
         local source_base="${source%@*}"
         
         # Only keep the first mapping for each source (don't overwrite)
         if [[ -z "${IDMS_MAPPINGS[$source_base]:-}" ]]; then
-            IDMS_MAPPINGS["$source_base"]="$mirror"
+            IDMS_MAPPINGS["$source_base"]="$mirrors"
             ((count++)) || true
-            log_debug "IDMS mapping: $source_base -> $mirror"
+            log_debug "IDMS mapping: $source_base -> $mirrors"
         fi
-    done < <(yq -r '.spec.imageDigestMirrors[] | "\(.source)|\(.mirrors[0])"' "$idms_file" 2>/dev/null)
+    done < <(yq -r '.spec.imageDigestMirrors[] | (.source + "|" + (.mirrors | join(";")))' "$idms_file" 2>/dev/null)
     
-    log_info "Loaded $count IDMS mappings"
+    IDMS_MAPPING_COUNT=$count
+    log_info "Loaded $IDMS_MAPPING_COUNT IDMS mappings"
 }
 
 #######################################
 # Resolve image to mirror using IDMS mappings
+# Returns semicolon-separated list of mirror URLs to try
 #######################################
 resolve_image_mirror() {
     local source_image="$1"
@@ -444,17 +448,27 @@ resolve_image_mirror() {
     # Extract image without tag/digest for matching
     local image_base="${source_image%@*}"
     image_base="${image_base%:*}"
+    local digest=""
+    if [[ "$source_image" == *"@"* ]]; then
+        digest="${source_image#*@}"
+    fi
     
     # Try exact match first
     if [[ -n "${IDMS_MAPPINGS[$image_base]:-}" ]]; then
-        local mirror_base="${IDMS_MAPPINGS[$image_base]}"
-        # Append the digest if present
-        if [[ "$source_image" == *"@"* ]]; then
-            local digest="${source_image#*@}"
-            echo "${mirror_base}@${digest}"
-        else
-            echo "$mirror_base"
-        fi
+        local mirrors="${IDMS_MAPPINGS[$image_base]}"
+        local result=""
+        # Process each mirror (semicolon-separated)
+        IFS=';' read -ra mirror_array <<< "$mirrors"
+        for mirror_base in "${mirror_array[@]}"; do
+            if [[ -n "$digest" ]]; then
+                [[ -n "$result" ]] && result+=";"
+                result+="${mirror_base}@${digest}"
+            else
+                [[ -n "$result" ]] && result+=";"
+                result+="$mirror_base"
+            fi
+        done
+        echo "$result"
         return 0
     fi
     
@@ -463,15 +477,22 @@ resolve_image_mirror() {
     # to match images like: registry.redhat.io/multicluster-engine/addon-manager-rhel9@sha256:...
     for source_key in "${!IDMS_MAPPINGS[@]}"; do
         if [[ "$image_base" == "$source_key"* ]]; then
-            local mirror_base="${IDMS_MAPPINGS[$source_key]}"
+            local mirrors="${IDMS_MAPPINGS[$source_key]}"
             # Calculate the path suffix (part after the source_key)
             local path_suffix="${image_base#$source_key}"
-            if [[ "$source_image" == *"@"* ]]; then
-                local digest="${source_image#*@}"
-                echo "${mirror_base}${path_suffix}@${digest}"
-            else
-                echo "${mirror_base}${path_suffix}"
-            fi
+            local result=""
+            # Process each mirror (semicolon-separated)
+            IFS=';' read -ra mirror_array <<< "$mirrors"
+            for mirror_base in "${mirror_array[@]}"; do
+                if [[ -n "$digest" ]]; then
+                    [[ -n "$result" ]] && result+=";"
+                    result+="${mirror_base}${path_suffix}@${digest}"
+                else
+                    [[ -n "$result" ]] && result+=";"
+                    result+="${mirror_base}${path_suffix}"
+                fi
+            done
+            echo "$result"
             return 0
         fi
     done
@@ -1182,19 +1203,21 @@ check_image_exists() {
     local source_image="$1"
     local target_registry="$2"
     local validation_mode="${3:-source}"
-    local target_image=""
+    local target_images=""
     
     case "$validation_mode" in
         source)
             # GA mode: validate directly at source registry
-            target_image="$source_image"
+            target_images="$source_image"
             ;;
         idms)
             # IDMS mode: try to resolve using IDMS mappings
-            if [[ ${#IDMS_MAPPINGS[@]} -gt 0 ]]; then
-                target_image=$(resolve_image_mirror "$source_image" 2>/dev/null) || true
+            # Returns semicolon-separated list of mirrors to try
+            # Use ${var+x} syntax for set -u compatibility
+            if [[ $IDMS_MAPPING_COUNT -gt 0 ]]; then
+                target_images=$(resolve_image_mirror "$source_image" 2>/dev/null) || true
             fi
-            if [[ -z "$target_image" ]]; then
+            if [[ -z "$target_images" ]]; then
                 # No IDMS mapping found - this will fail in disconnected environments
                 echo "no-mapping|$source_image|IDMS_MAPPING_REQUIRED"
                 return
@@ -1204,22 +1227,29 @@ check_image_exists() {
             # Mirror mode: transform to target registry path
             local image_path
             image_path=$(echo "$source_image" | sed 's|^[^/]*/||')
-            target_image="$target_registry/$image_path"
+            target_images="$target_registry/$image_path"
             ;;
     esac
     
-    # Normalize image reference (strip tag if both tag and digest present)
-    local check_image
-    check_image=$(normalize_image_ref "$target_image")
+    # Try each mirror in the list (semicolon-separated for IDMS fallback support)
+    local mirrors_to_try
+    IFS=';' read -ra mirrors_to_try <<< "$target_images"
+    for target_image in "${mirrors_to_try[@]}"; do
+        # Normalize image reference (strip tag if both tag and digest present)
+        local check_image
+        check_image=$(normalize_image_ref "$target_image")
+        
+        log_debug "Checking: $check_image"
+        
+        # Use skopeo to check if image exists
+        if skopeo inspect --raw "docker://$check_image" &>/dev/null; then
+            echo "available|$source_image|$target_image"
+            return
+        fi
+    done
     
-    log_debug "Checking: $check_image"
-    
-    # Use skopeo to check if image exists
-    if skopeo inspect --raw "docker://$check_image" &>/dev/null; then
-        echo "available|$source_image|$target_image"
-    else
-        echo "missing|$source_image|$target_image"
-    fi
+    # None of the mirrors worked - report first mirror as missing
+    echo "missing|$source_image|${mirrors_to_try[0]}"
 }
 
 #######################################
@@ -1464,7 +1494,7 @@ print_validation_report() {
     # Validation mode info
     if [[ -n "$IDMS_FILE" ]]; then
         echo -e "  ${ACCENT}🔄 Mode:${NC}      IDMS Mirror Mapping"
-        echo -e "  ${ACCENT}📄 IDMS:${NC}      $(basename "$IDMS_FILE") (${#IDMS_MAPPINGS[@]} mappings)"
+        echo -e "  ${ACCENT}📄 IDMS:${NC}      $(basename "$IDMS_FILE") ($IDMS_MAPPING_COUNT mappings)"
     elif [[ -n "$TARGET_REGISTRY" ]]; then
         echo -e "  ${ACCENT}🔄 Mode:${NC}      Target Registry Mirror"
         echo -e "  ${ACCENT}🎯 Target:${NC}    ${TARGET_REGISTRY}"
@@ -1649,12 +1679,12 @@ cmd_idms_validate() {
     setup_auth
     parse_idms_file "$IDMS_FILE"
     
-    if [[ ${#IDMS_MAPPINGS[@]} -eq 0 ]]; then
+    if [[ $IDMS_MAPPING_COUNT -eq 0 ]]; then
         log_error "No mappings found in IDMS file"
         exit 1
     fi
     
-    log_info "Validating ${#IDMS_MAPPINGS[@]} IDMS mirror mappings..."
+    log_info "Validating $IDMS_MAPPING_COUNT IDMS mirror mappings..."
     echo ""
     
     local available=0
@@ -1710,7 +1740,7 @@ cmd_idms_validate() {
     echo ""
     
     echo -e "  ${ACCENT}📄 IDMS:${NC}      $(basename "$IDMS_FILE")"
-    echo -e "  ${ACCENT}🔢 Total:${NC}     ${#IDMS_MAPPINGS[@]} mappings"
+    echo -e "  ${ACCENT}🔢 Total:${NC}     $IDMS_MAPPING_COUNT mappings"
     echo -e "  ${ACCENT}📅 Date:${NC}      $(date -u '+%Y-%m-%d %H:%M:%S UTC')"
     
     echo ""
