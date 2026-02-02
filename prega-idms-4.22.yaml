@@ -284,9 +284,6 @@ spec:
     - quay.io/prega/test/openshift-pipelines/pipelines-git-init-rhel8
     source: registry.redhat.io/openshift-pipelines/pipelines-git-init-rhel8
   - mirrors:
-    - quay.io/prega/test/rhceph-dev/openshift-ose-kube-rbac-proxy-rhel9
-    source: registry.redhat.io/openshift4/ose-kube-rbac-proxy-rhel9
-  - mirrors:
     - quay.io/prega/test/openshift4/ose-kube-rbac-proxy
     source: registry.redhat.io/openshift4/ose-kube-rbac-proxy
   - mirrors:
@@ -487,9 +484,6 @@ spec:
   - mirrors:
     - quay.io/prega/test/rhceph-dev/odf4-odf-csi-addons-operator-bundle
     source: quay.io/prega/test/rhceph-dev/odf4-odf-csi-addons-operator-bundle
-  - mirrors:
-    - quay.io/prega/test/redhat-user-workloads/ocp-art-tenant/art-images-share
-    source: registry.redhat.io/openshift4
   - mirrors:
     - quay.io/prega/test/acm-d/assisted-service-9-rhel9
     source: registry.redhat.io/acm-d/assisted-service-9-rhel9
@@ -1220,9 +1214,6 @@ spec:
     - quay.io/prega/test/redhat-user-workloads/ocp-art-tenant/art-images-share
     source: registry.redhat.io/openshift4/ingress-node-firewall-rhel9
   - mirrors:
-    - quay.io/prega/test/rhceph-dev/openshift-ose-kube-rbac-proxy-rhel9
-    source: registry.redhat.io/openshift4/ose-kube-rbac-proxy-rhel9
-  - mirrors:
     - quay.io/prega/test/redhat-user-workloads/ocp-art-tenant/art-images-share
     source: registry.redhat.io/openshift4/kubernetes-nmstate-operator-bundle
   - mirrors:
@@ -1231,9 +1222,6 @@ spec:
   - mirrors:
     - quay.io/prega/test/redhat-user-workloads/ocp-art-tenant/art-images-share
     source: registry.redhat.io/openshift4/nmstate-console-plugin-rhel9
-  - mirrors:
-    - quay.io/prega/test/rhceph-dev/openshift-ose-kube-rbac-proxy-rhel9
-    source: registry.redhat.io/openshift4/ose-kube-rbac-proxy-rhel9
   - mirrors:
     - quay.io/prega/test/redhat-user-workloads/ocp-art-tenant/art-images-share
     source: registry.redhat.io/openshift4/ose-kubernetes-nmstate-handler-rhel9
@@ -1246,9 +1234,6 @@ spec:
   - mirrors:
     - quay.io/prega/test/redhat-user-workloads/ocp-art-tenant/art-images-share
     source: registry.redhat.io/openshift4/metallb-rhel9
-  - mirrors:
-    - quay.io/prega/test/rhceph-dev/openshift-ose-kube-rbac-proxy-rhel9
-    source: registry.redhat.io/openshift4/ose-kube-rbac-proxy-rhel9
   - mirrors:
     - quay.io/prega/test/redhat-user-workloads/ocp-art-tenant/art-images-share
     source: registry.redhat.io/openshift4/ose-metallb-operator-bundle
@@ -1270,9 +1255,6 @@ spec:
   - mirrors:
     - quay.io/prega/test/redhat-user-workloads/ocp-art-tenant/art-images-share
     source: registry.redhat.io/openshift4/ose-csi-node-driver-registrar-rhel9
-  - mirrors:
-    - quay.io/prega/test/rhceph-dev/openshift-ose-kube-rbac-proxy-rhel9
-    source: registry.redhat.io/openshift4/ose-kube-rbac-proxy-rhel9
   - mirrors:
     - quay.io/prega/test/redhat-user-workloads/ocp-art-tenant/art-images-share
     source: registry.redhat.io/openshift4/ose-tools-rhel9
@@ -1323,19 +1305,10 @@ spec:
     source: registry.redhat.io/openshift4/ose-dpu-rhel9-operator
   - mirrors:
     - quay.io/prega/test/redhat-user-workloads/ocp-art-tenant/art-images-share
-    source: registry.redhat.io/openshift4/ose-csi-external-provisioner-rhel9
-  - mirrors:
-    - quay.io/prega/test/redhat-user-workloads/ocp-art-tenant/art-images-share
     source: registry.redhat.io/openshift4/ose-csi-external-resizer-rhel9
   - mirrors:
     - quay.io/prega/test/redhat-user-workloads/ocp-art-tenant/art-images-share
     source: registry.redhat.io/openshift4/ose-csi-external-snapshotter-rhel9
-  - mirrors:
-    - quay.io/prega/test/redhat-user-workloads/ocp-art-tenant/art-images-share
-    source: registry.redhat.io/openshift4/ose-csi-livenessprobe-rhel9
-  - mirrors:
-    - quay.io/prega/test/redhat-user-workloads/ocp-art-tenant/art-images-share
-    source: registry.redhat.io/openshift4/ose-csi-node-driver-registrar-rhel9
   - mirrors:
     - quay.io/prega/test/redhat-user-workloads/ocp-art-tenant/art-images-share
     source: registry.redhat.io/openshift4/ose-gcp-filestore-csi-driver-operator-bundle
@@ -1345,12 +1318,6 @@ spec:
   - mirrors:
     - quay.io/prega/test/redhat-user-workloads/ocp-art-tenant/art-images-share
     source: registry.redhat.io/openshift4/ose-gcp-filestore-csi-driver-rhel9
-  - mirrors:
-    - quay.io/prega/test/rhceph-dev/openshift-ose-kube-rbac-proxy-rhel9
-    source: registry.redhat.io/openshift4/ose-kube-rbac-proxy-rhel9
-  - mirrors:
-    - quay.io/prega/test/rhceph-dev/openshift-ose-kube-rbac-proxy-rhel9
-    source: registry.redhat.io/openshift4/ose-kube-rbac-proxy-rhel9
   - mirrors:
     - quay.io/prega/test/redhat-user-workloads/ocp-art-tenant/art-images-share
     source: registry.redhat.io/openshift4/ose-local-storage-diskmaker-rhel9
@@ -1367,9 +1334,6 @@ spec:
     - quay.io/prega/test/redhat-user-workloads/ocp-art-tenant/art-images-share
     source: registry.redhat.io/openshift4/ose-cloud-event-proxy-rhel9
   - mirrors:
-    - quay.io/prega/test/rhceph-dev/openshift-ose-kube-rbac-proxy-rhel9
-    source: registry.redhat.io/openshift4/ose-kube-rbac-proxy-rhel9
-  - mirrors:
     - quay.io/prega/test/redhat-user-workloads/ocp-art-tenant/art-images-share
     source: registry.redhat.io/openshift4/ose-ptp-operator-bundle
   - mirrors:
@@ -1383,12 +1347,6 @@ spec:
     source: registry.redhat.io/openshift4/ptp-must-gather-rhel9
   - mirrors:
     - quay.io/prega/test/redhat-user-workloads/ocp-art-tenant/art-images-share
-    source: registry.redhat.io/openshift4/ose-csi-livenessprobe-rhel9
-  - mirrors:
-    - quay.io/prega/test/redhat-user-workloads/ocp-art-tenant/art-images-share
-    source: registry.redhat.io/openshift4/ose-csi-node-driver-registrar-rhel9
-  - mirrors:
-    - quay.io/prega/test/redhat-user-workloads/ocp-art-tenant/art-images-share
     source: registry.redhat.io/openshift4/ose-secrets-store-csi-driver-operator-bundle
   - mirrors:
     - quay.io/prega/test/redhat-user-workloads/ocp-art-tenant/art-images-share
@@ -1398,21 +1356,6 @@ spec:
     source: registry.redhat.io/openshift4/ose-secrets-store-csi-driver-rhel9
   - mirrors:
     - quay.io/prega/test/redhat-user-workloads/ocp-art-tenant/art-images-share
-    source: registry.redhat.io/openshift4/ose-csi-external-provisioner-rhel9
-  - mirrors:
-    - quay.io/prega/test/redhat-user-workloads/ocp-art-tenant/art-images-share
-    source: registry.redhat.io/openshift4/ose-csi-external-resizer-rhel9
-  - mirrors:
-    - quay.io/prega/test/redhat-user-workloads/ocp-art-tenant/art-images-share
-    source: registry.redhat.io/openshift4/ose-csi-livenessprobe-rhel9
-  - mirrors:
-    - quay.io/prega/test/redhat-user-workloads/ocp-art-tenant/art-images-share
-    source: registry.redhat.io/openshift4/ose-csi-node-driver-registrar-rhel9
-  - mirrors:
-    - quay.io/prega/test/rhceph-dev/openshift-ose-kube-rbac-proxy-rhel9
-    source: registry.redhat.io/openshift4/ose-kube-rbac-proxy-rhel9
-  - mirrors:
-    - quay.io/prega/test/redhat-user-workloads/ocp-art-tenant/art-images-share
     source: registry.redhat.io/openshift4/ose-smb-csi-driver-operator-bundle
   - mirrors:
     - quay.io/prega/test/redhat-user-workloads/ocp-art-tenant/art-images-share
@@ -1420,9 +1363,6 @@ spec:
   - mirrors:
     - quay.io/prega/test/redhat-user-workloads/ocp-art-tenant/art-images-share
     source: registry.redhat.io/openshift4/ose-smb-csi-driver-rhel9
-  - mirrors:
-    - quay.io/prega/test/rhceph-dev/openshift-ose-kube-rbac-proxy-rhel9
-    source: registry.redhat.io/openshift4/ose-kube-rbac-proxy-rhel9
   - mirrors:
     - quay.io/prega/test/redhat-user-workloads/ocp-art-tenant/art-images-share
     source: registry.redhat.io/openshift4/ose-sriov-dp-admission-controller-rhel9
@@ -1471,9 +1411,6 @@ spec:
   - mirrors:
     - quay.io/prega/test/redhat-user-workloads/ocp-art-tenant/art-images-share
     source: registry.redhat.io/openshift4/ose-vertical-pod-autoscaler-rhel9
-  - mirrors:
-    - quay.io/prega/test/rhceph-dev/openshift-ose-kube-rbac-proxy-rhel9
-    source: registry.redhat.io/openshift4/ose-kube-rbac-proxy-rhel9
   - mirrors:
     - quay.io/prega/test/redhat-user-workloads/ocp-art-tenant/art-images-share
     source: registry.redhat.io/openshift4/pf-status-relay-operator-bundle
