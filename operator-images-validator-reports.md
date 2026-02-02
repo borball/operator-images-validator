@@ -507,19 +507,57 @@ PreGA tests show missing mirrors that need to be added to the IDMS file.
 
 ---
 
+## Multi-Channel Test Results
+
+### ODF Operator - All Available Channels
+
+| Catalog | Channel | Total | Available | Missing | Status |
+|---------|---------|-------|-----------|---------|--------|
+| GA v4.20 | stable-4.19 | 28 | 28 (100%) | 0 | **PASSED** |
+| GA v4.20 | stable-4.20 | 28 | 28 (100%) | 0 | **PASSED** |
+| PreGA v4.21 | stable-4.21 | 30 | 20 (67%) | 10 | **FAILED** |
+| PreGA v4.22 | stable-4.20 | 29 | 23 (79%) | 6 | **FAILED** |
+| PreGA v4.22 | stable-4.21 | 32 | 25 (78%) | 7 | **FAILED** |
+| PreGA v4.22 | stable-4.22 | 31 | 24 (77%) | 7 | **FAILED** |
+
+### ACM Operator - All Available Channels
+
+| Catalog | Channel | Total | Available | Missing | Status |
+|---------|---------|-------|-----------|---------|--------|
+| GA v4.20 | release-2.14 | 96 | 96 (100%) | 0 | **PASSED** |
+| GA v4.20 | release-2.15 | 104 | 104 (100%) | 0 | **PASSED** |
+| PreGA v4.21 | release-2.16 | 104 | 21 (20%) | 83 | **FAILED** |
+| PreGA v4.22 | release-2.14 | 97 | 15 (15%) | 82 | **FAILED** |
+| PreGA v4.22 | release-2.15 | 105 | 21 (20%) | 84 | **FAILED** |
+| PreGA v4.22 | release-2.16 | 105 | 21 (20%) | 84 | **FAILED** |
+
+### Key Findings
+
+- **GA releases (v4.20)**: All channels pass with 100% image availability
+- **PreGA ODF**: Approximately 67-79% availability across all channels - missing mostly OpenShift CSI/Prometheus components
+- **PreGA ACM**: Only ~15-20% availability - significant gaps in multicluster-engine and rhacm2 namespace images
+
+---
+
 ## Results Summary
 
 | Test | Catalog Version | Channel | Mode | Total | Available | Missing | Status |
 |------|----------------|---------|------|-------|-----------|---------|--------|
+| ODF (GA) | v4.20 | stable-4.19 | Source | 28 | 28 (100%) | 0 | **PASSED** |
 | ODF (GA) | v4.20 | stable-4.20 | Source | 28 | 28 (100%) | 0 | **PASSED** |
+| RHACM (GA) | v4.20 | release-2.14 | Source | 96 | 96 (100%) | 0 | **PASSED** |
 | RHACM (GA) | v4.20 | release-2.15 | Source | 104 | 104 (100%) | 0 | **PASSED** |
 | CloudRAN (GA) | v4.20 | stable/stable-6.4 | Source | 37 | 37 (100%) | 0 | **PASSED** |
 | Default Channel (GA) | v4.20 | *(auto)* | Source | 6 | 6 (100%) | 0 | **PASSED** |
 | ODF (PreGA v4.21) | v4.21 | stable-4.21 | IDMS | 30 | 20 (67%) | 10 | **FAILED** |
 | RHACM (PreGA v4.21) | v4.21 | release-2.16 | IDMS | 104 | 21 (20%) | 83 | **FAILED** |
 | CloudRAN (PreGA v4.21) | v4.21 | stable/stable-6.4 | IDMS | 38 | 37 (97%) | 1 | **FAILED** |
+| ODF (PreGA v4.22) | v4.22 | stable-4.20 | IDMS | 29 | 23 (79%) | 6 | **FAILED** |
+| ODF (PreGA v4.22) | v4.22 | stable-4.21 | IDMS | 32 | 25 (78%) | 7 | **FAILED** |
 | ODF (PreGA v4.22) | v4.22 | stable-4.22 | IDMS | 31 | 24 (77%) | 7 | **FAILED** |
 | RHACM (PreGA v4.22) | v4.22 | release-2.14 | IDMS | 97 | 15 (15%) | 82 | **FAILED** |
+| RHACM (PreGA v4.22) | v4.22 | release-2.15 | IDMS | 105 | 21 (20%) | 84 | **FAILED** |
+| RHACM (PreGA v4.22) | v4.22 | release-2.16 | IDMS | 105 | 21 (20%) | 84 | **FAILED** |
 | CloudRAN (PreGA v4.22) | v4.22 | stable/stable-6.2 | IDMS | 38 | 37 (97%) | 1 | **FAILED** |
 
 ---
@@ -559,12 +597,20 @@ To fix the PreGA failures, add the missing mirrors to the IDMS file. Generate re
 ## Commands Used
 
 ```bash
-# GA - ODF
+# GA - ODF (all channels)
+./operator-images-validator.sh validate \
+  --catalog registry.redhat.io/redhat/redhat-operator-index:v4.20 \
+  --operators odf-operator:stable-4.19
+
 ./operator-images-validator.sh validate \
   --catalog registry.redhat.io/redhat/redhat-operator-index:v4.20 \
   --operators odf-operator:stable-4.20
 
-# GA - RHACM
+# GA - RHACM (all channels)
+./operator-images-validator.sh validate \
+  --catalog registry.redhat.io/redhat/redhat-operator-index:v4.20 \
+  --operators advanced-cluster-management:release-2.14
+
 ./operator-images-validator.sh validate \
   --catalog registry.redhat.io/redhat/redhat-operator-index:v4.20 \
   --operators advanced-cluster-management:release-2.15
@@ -598,17 +644,37 @@ To fix the PreGA failures, add the missing mirrors to the IDMS file. Generate re
   --idms prega-idms-4.21.yaml \
   --operators ptp-operator:stable,local-storage-operator:stable,sriov-network-operator:stable,cluster-logging:stable-6.4,lifecycle-agent:stable,redhat-oadp-operator:stable
 
-# PreGA v4.22 - ODF
+# PreGA v4.22 - ODF (all channels)
+./operator-images-validator.sh validate \
+  --catalog quay.io/prega/prega-operator-index:v4.22-20260121T101531 \
+  --idms prega-idms-4.22.yaml \
+  --operators odf-operator:stable-4.20
+
+./operator-images-validator.sh validate \
+  --catalog quay.io/prega/prega-operator-index:v4.22-20260121T101531 \
+  --idms prega-idms-4.22.yaml \
+  --operators odf-operator:stable-4.21
+
 ./operator-images-validator.sh validate \
   --catalog quay.io/prega/prega-operator-index:v4.22-20260121T101531 \
   --idms prega-idms-4.22.yaml \
   --operators odf-operator:stable-4.22
 
-# PreGA v4.22 - RHACM
+# PreGA v4.22 - RHACM (all channels)
 ./operator-images-validator.sh validate \
   --catalog quay.io/prega/prega-operator-index:v4.22-20260121T101531 \
   --idms prega-idms-4.22.yaml \
   --operators advanced-cluster-management:release-2.14
+
+./operator-images-validator.sh validate \
+  --catalog quay.io/prega/prega-operator-index:v4.22-20260121T101531 \
+  --idms prega-idms-4.22.yaml \
+  --operators advanced-cluster-management:release-2.15
+
+./operator-images-validator.sh validate \
+  --catalog quay.io/prega/prega-operator-index:v4.22-20260121T101531 \
+  --idms prega-idms-4.22.yaml \
+  --operators advanced-cluster-management:release-2.16
 
 # PreGA v4.22 - CloudRAN (includes lifecycle-agent and OADP)
 ./operator-images-validator.sh validate \
