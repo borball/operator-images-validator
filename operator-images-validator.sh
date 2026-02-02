@@ -458,15 +458,19 @@ resolve_image_mirror() {
         return 0
     fi
     
-    # Try prefix matching (for cases where IDMS has repo without tag)
+    # Try prefix matching (for namespace-level IDMS mappings)
+    # This allows mappings like: registry.redhat.io/multicluster-engine -> quay.io/prega/test/multicluster-engine
+    # to match images like: registry.redhat.io/multicluster-engine/addon-manager-rhel9@sha256:...
     for source_key in "${!IDMS_MAPPINGS[@]}"; do
         if [[ "$image_base" == "$source_key"* ]]; then
             local mirror_base="${IDMS_MAPPINGS[$source_key]}"
+            # Calculate the path suffix (part after the source_key)
+            local path_suffix="${image_base#$source_key}"
             if [[ "$source_image" == *"@"* ]]; then
                 local digest="${source_image#*@}"
-                echo "${mirror_base}@${digest}"
+                echo "${mirror_base}${path_suffix}@${digest}"
             else
-                echo "$mirror_base"
+                echo "${mirror_base}${path_suffix}"
             fi
             return 0
         fi
