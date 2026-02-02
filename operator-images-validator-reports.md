@@ -25,6 +25,8 @@ This document contains validation reports for OpenShift operator images using th
 | RAN (GA) | v4.20 | ptp-operator:stable | Source | 4 | 4 (100%) | 0 | 🟢 **PASSED** |
 | | | local-storage-operator:stable | Source | 4 | 4 (100%) | 0 | 🟢 **PASSED** |
 | | | sriov-network-operator:stable | Source | 7 | 7 (100%) | 0 | 🟢 **PASSED** |
+| | | cluster-logging:stable-6.2 | Source | 3 | 3 (100%) | 0 | 🟢 **PASSED** |
+| | | cluster-logging:stable-6.3 | Source | 3 | 3 (100%) | 0 | 🟢 **PASSED** |
 | | | cluster-logging:stable-6.4 | Source | 12 | 12 (100%) | 0 | 🟢 **PASSED** |
 | | | lifecycle-agent:stable | Source | 3 | 3 (100%) | 0 | 🟢 **PASSED** |
 | | | redhat-oadp-operator:stable | Source | 7 | 7 (100%) | 0 | 🟢 **PASSED** |
