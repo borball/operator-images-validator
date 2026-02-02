@@ -284,7 +284,7 @@ spec:
     - quay.io/prega/test/openshift-pipelines/pipelines-git-init-rhel8
     source: registry.redhat.io/openshift-pipelines/pipelines-git-init-rhel8
   - mirrors:
-    - quay.io/prega/test/openshift4/ose-kube-rbac-proxy-rhel9
+    - quay.io/prega/test/rhceph-dev/openshift-ose-kube-rbac-proxy-rhel9
     source: registry.redhat.io/openshift4/ose-kube-rbac-proxy-rhel9
   - mirrors:
     - quay.io/prega/test/openshift4/ose-kube-rbac-proxy
@@ -1220,7 +1220,7 @@ spec:
     - quay.io/prega/test/redhat-user-workloads/ocp-art-tenant/art-images-share
     source: registry.redhat.io/openshift4/ingress-node-firewall-rhel9
   - mirrors:
-    - quay.io/prega/test/redhat-user-workloads/ocp-art-tenant/art-images-share
+    - quay.io/prega/test/rhceph-dev/openshift-ose-kube-rbac-proxy-rhel9
     source: registry.redhat.io/openshift4/ose-kube-rbac-proxy-rhel9
   - mirrors:
     - quay.io/prega/test/redhat-user-workloads/ocp-art-tenant/art-images-share
@@ -1232,7 +1232,7 @@ spec:
     - quay.io/prega/test/redhat-user-workloads/ocp-art-tenant/art-images-share
     source: registry.redhat.io/openshift4/nmstate-console-plugin-rhel9
   - mirrors:
-    - quay.io/prega/test/redhat-user-workloads/ocp-art-tenant/art-images-share
+    - quay.io/prega/test/rhceph-dev/openshift-ose-kube-rbac-proxy-rhel9
     source: registry.redhat.io/openshift4/ose-kube-rbac-proxy-rhel9
   - mirrors:
     - quay.io/prega/test/redhat-user-workloads/ocp-art-tenant/art-images-share
@@ -1247,7 +1247,7 @@ spec:
     - quay.io/prega/test/redhat-user-workloads/ocp-art-tenant/art-images-share
     source: registry.redhat.io/openshift4/metallb-rhel9
   - mirrors:
-    - quay.io/prega/test/redhat-user-workloads/ocp-art-tenant/art-images-share
+    - quay.io/prega/test/rhceph-dev/openshift-ose-kube-rbac-proxy-rhel9
     source: registry.redhat.io/openshift4/ose-kube-rbac-proxy-rhel9
   - mirrors:
     - quay.io/prega/test/redhat-user-workloads/ocp-art-tenant/art-images-share
@@ -1271,7 +1271,7 @@ spec:
     - quay.io/prega/test/redhat-user-workloads/ocp-art-tenant/art-images-share
     source: registry.redhat.io/openshift4/ose-csi-node-driver-registrar-rhel9
   - mirrors:
-    - quay.io/prega/test/redhat-user-workloads/ocp-art-tenant/art-images-share
+    - quay.io/prega/test/rhceph-dev/openshift-ose-kube-rbac-proxy-rhel9
     source: registry.redhat.io/openshift4/ose-kube-rbac-proxy-rhel9
   - mirrors:
     - quay.io/prega/test/redhat-user-workloads/ocp-art-tenant/art-images-share
@@ -1346,10 +1346,10 @@ spec:
     - quay.io/prega/test/redhat-user-workloads/ocp-art-tenant/art-images-share
     source: registry.redhat.io/openshift4/ose-gcp-filestore-csi-driver-rhel9
   - mirrors:
-    - quay.io/prega/test/redhat-user-workloads/ocp-art-tenant/art-images-share
+    - quay.io/prega/test/rhceph-dev/openshift-ose-kube-rbac-proxy-rhel9
     source: registry.redhat.io/openshift4/ose-kube-rbac-proxy-rhel9
   - mirrors:
-    - quay.io/prega/test/redhat-user-workloads/ocp-art-tenant/art-images-share
+    - quay.io/prega/test/rhceph-dev/openshift-ose-kube-rbac-proxy-rhel9
     source: registry.redhat.io/openshift4/ose-kube-rbac-proxy-rhel9
   - mirrors:
     - quay.io/prega/test/redhat-user-workloads/ocp-art-tenant/art-images-share
@@ -1367,7 +1367,7 @@ spec:
     - quay.io/prega/test/redhat-user-workloads/ocp-art-tenant/art-images-share
     source: registry.redhat.io/openshift4/ose-cloud-event-proxy-rhel9
   - mirrors:
-    - quay.io/prega/test/redhat-user-workloads/ocp-art-tenant/art-images-share
+    - quay.io/prega/test/rhceph-dev/openshift-ose-kube-rbac-proxy-rhel9
     source: registry.redhat.io/openshift4/ose-kube-rbac-proxy-rhel9
   - mirrors:
     - quay.io/prega/test/redhat-user-workloads/ocp-art-tenant/art-images-share
@@ -1409,7 +1409,7 @@ spec:
     - quay.io/prega/test/redhat-user-workloads/ocp-art-tenant/art-images-share
     source: registry.redhat.io/openshift4/ose-csi-node-driver-registrar-rhel9
   - mirrors:
-    - quay.io/prega/test/redhat-user-workloads/ocp-art-tenant/art-images-share
+    - quay.io/prega/test/rhceph-dev/openshift-ose-kube-rbac-proxy-rhel9
     source: registry.redhat.io/openshift4/ose-kube-rbac-proxy-rhel9
   - mirrors:
     - quay.io/prega/test/redhat-user-workloads/ocp-art-tenant/art-images-share
@@ -1421,7 +1421,7 @@ spec:
     - quay.io/prega/test/redhat-user-workloads/ocp-art-tenant/art-images-share
     source: registry.redhat.io/openshift4/ose-smb-csi-driver-rhel9
   - mirrors:
-    - quay.io/prega/test/redhat-user-workloads/ocp-art-tenant/art-images-share
+    - quay.io/prega/test/rhceph-dev/openshift-ose-kube-rbac-proxy-rhel9
     source: registry.redhat.io/openshift4/ose-kube-rbac-proxy-rhel9
   - mirrors:
     - quay.io/prega/test/redhat-user-workloads/ocp-art-tenant/art-images-share
@@ -1472,7 +1472,7 @@ spec:
     - quay.io/prega/test/redhat-user-workloads/ocp-art-tenant/art-images-share
     source: registry.redhat.io/openshift4/ose-vertical-pod-autoscaler-rhel9
   - mirrors:
-    - quay.io/prega/test/redhat-user-workloads/ocp-art-tenant/art-images-share
+    - quay.io/prega/test/rhceph-dev/openshift-ose-kube-rbac-proxy-rhel9
     source: registry.redhat.io/openshift4/ose-kube-rbac-proxy-rhel9
   - mirrors:
     - quay.io/prega/test/redhat-user-workloads/ocp-art-tenant/art-images-share
