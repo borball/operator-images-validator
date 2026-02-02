@@ -18,22 +18,24 @@ This document contains validation reports for OpenShift operator images using th
 
 | Test | Catalog Version | Channel | Mode | Total | Available | Missing | Status |
 |------|----------------|---------|------|-------|-----------|---------|--------|
-| ODF (GA) | v4.20 | stable-4.19 | Source | 28 | 28 (100%) | 0 | **PASSED** |
-| ODF (GA) | v4.20 | stable-4.20 | Source | 28 | 28 (100%) | 0 | **PASSED** |
-| ACM (GA) | v4.20 | release-2.14 | Source | 96 | 96 (100%) | 0 | **PASSED** |
-| ACM (GA) | v4.20 | release-2.15 | Source | 104 | 104 (100%) | 0 | **PASSED** |
-| RAN (GA) | v4.20 | stable/stable-6.4 | Source | 37 | 37 (100%) | 0 | **PASSED** |
-| Default Channel (GA) | v4.20 | *(auto)* | Source | 6 | 6 (100%) | 0 | **PASSED** |
-| ODF (PreGA v4.21) | v4.21 | stable-4.21 | IDMS | 30 | 20 (67%) | 10 | **FAILED** |
-| ACM (PreGA v4.21) | v4.21 | release-2.16 | IDMS | 104 | 21 (20%) | 83 | **FAILED** |
-| RAN (PreGA v4.21) | v4.21 | stable/stable-6.4 | IDMS | 38 | 37 (97%) | 1 | **FAILED** |
-| ODF (PreGA v4.22) | v4.22 | stable-4.20 | IDMS | 29 | 23 (79%) | 6 | **FAILED** |
-| ODF (PreGA v4.22) | v4.22 | stable-4.21 | IDMS | 32 | 25 (78%) | 7 | **FAILED** |
-| ODF (PreGA v4.22) | v4.22 | stable-4.22 | IDMS | 31 | 24 (77%) | 7 | **FAILED** |
-| ACM (PreGA v4.22) | v4.22 | release-2.14 | IDMS | 97 | 15 (15%) | 82 | **FAILED** |
-| ACM (PreGA v4.22) | v4.22 | release-2.15 | IDMS | 105 | 21 (20%) | 84 | **FAILED** |
-| ACM (PreGA v4.22) | v4.22 | release-2.16 | IDMS | 105 | 21 (20%) | 84 | **FAILED** |
-| RAN (PreGA v4.22) | v4.22 | stable/stable-6.2 | IDMS | 38 | 37 (97%) | 1 | **FAILED** |
+| ODF (GA) | v4.20 | stable-4.19 | Source | 28 | 28 (100%) | 0 | 🟢 **PASSED** |
+| ODF (GA) | v4.20 | stable-4.20 | Source | 28 | 28 (100%) | 0 | 🟢 **PASSED** |
+| ACM (GA) | v4.20 | release-2.14 | Source | 96 | 96 (100%) | 0 | 🟢 **PASSED** |
+| ACM (GA) | v4.20 | release-2.15 | Source | 104 | 104 (100%) | 0 | 🟢 **PASSED** |
+| RAN (GA) | v4.20 | stable/stable-6.4 | Source | 37 | 37 (100%) | 0 | 🟢 **PASSED** |
+| Default Channel (GA) | v4.20 | *(auto)* | Source | 6 | 6 (100%) | 0 | 🟢 **PASSED** |
+| ODF (PreGA v4.21) | v4.21 | stable-4.21 | IDMS | 30 | 20 (67%) | 10 | 🔴 **FAILED** |
+| ACM (PreGA v4.21) | v4.21 | release-2.16 | IDMS | 104 | 21 (20%) | 83 | 🔴 **FAILED** |
+| RAN (PreGA v4.21) | v4.21 | stable/stable-6.4 | IDMS | 38 | 37 (97%) | 1 | 🟡 **FAILED** |
+| ODF (PreGA v4.22) | v4.22 | stable-4.20 | IDMS | 29 | 23 (79%) | 6 | 🔴 **FAILED** |
+| ODF (PreGA v4.22) | v4.22 | stable-4.21 | IDMS | 32 | 25 (78%) | 7 | 🔴 **FAILED** |
+| ODF (PreGA v4.22) | v4.22 | stable-4.22 | IDMS | 31 | 24 (77%) | 7 | 🔴 **FAILED** |
+| ACM (PreGA v4.22) | v4.22 | release-2.14 | IDMS | 97 | 15 (15%) | 82 | 🔴 **FAILED** |
+| ACM (PreGA v4.22) | v4.22 | release-2.15 | IDMS | 105 | 21 (20%) | 84 | 🔴 **FAILED** |
+| ACM (PreGA v4.22) | v4.22 | release-2.16 | IDMS | 105 | 21 (20%) | 84 | 🔴 **FAILED** |
+| RAN (PreGA v4.22) | v4.22 | stable/stable-6.2 | IDMS | 38 | 37 (97%) | 1 | 🟡 **FAILED** |
+
+> **Legend:** 🟢 100% available | 🟡 >90% available | 🔴 <90% available
 
 ---
 
@@ -536,23 +538,23 @@ PreGA tests show missing mirrors that need to be added to the IDMS file.
 
 | Catalog | Channel | Total | Available | Missing | Status |
 |---------|---------|-------|-----------|---------|--------|
-| GA v4.20 | stable-4.19 | 28 | 28 (100%) | 0 | **PASSED** |
-| GA v4.20 | stable-4.20 | 28 | 28 (100%) | 0 | **PASSED** |
-| PreGA v4.21 | stable-4.21 | 30 | 20 (67%) | 10 | **FAILED** |
-| PreGA v4.22 | stable-4.20 | 29 | 23 (79%) | 6 | **FAILED** |
-| PreGA v4.22 | stable-4.21 | 32 | 25 (78%) | 7 | **FAILED** |
-| PreGA v4.22 | stable-4.22 | 31 | 24 (77%) | 7 | **FAILED** |
+| GA v4.20 | stable-4.19 | 28 | 28 (100%) | 0 | 🟢 **PASSED** |
+| GA v4.20 | stable-4.20 | 28 | 28 (100%) | 0 | 🟢 **PASSED** |
+| PreGA v4.21 | stable-4.21 | 30 | 20 (67%) | 10 | 🔴 **FAILED** |
+| PreGA v4.22 | stable-4.20 | 29 | 23 (79%) | 6 | 🔴 **FAILED** |
+| PreGA v4.22 | stable-4.21 | 32 | 25 (78%) | 7 | 🔴 **FAILED** |
+| PreGA v4.22 | stable-4.22 | 31 | 24 (77%) | 7 | 🔴 **FAILED** |
 
 ### ACM Operator - All Available Channels
 
 | Catalog | Channel | Total | Available | Missing | Status |
 |---------|---------|-------|-----------|---------|--------|
-| GA v4.20 | release-2.14 | 96 | 96 (100%) | 0 | **PASSED** |
-| GA v4.20 | release-2.15 | 104 | 104 (100%) | 0 | **PASSED** |
-| PreGA v4.21 | release-2.16 | 104 | 21 (20%) | 83 | **FAILED** |
-| PreGA v4.22 | release-2.14 | 97 | 15 (15%) | 82 | **FAILED** |
-| PreGA v4.22 | release-2.15 | 105 | 21 (20%) | 84 | **FAILED** |
-| PreGA v4.22 | release-2.16 | 105 | 21 (20%) | 84 | **FAILED** |
+| GA v4.20 | release-2.14 | 96 | 96 (100%) | 0 | 🟢 **PASSED** |
+| GA v4.20 | release-2.15 | 104 | 104 (100%) | 0 | 🟢 **PASSED** |
+| PreGA v4.21 | release-2.16 | 104 | 21 (20%) | 83 | 🔴 **FAILED** |
+| PreGA v4.22 | release-2.14 | 97 | 15 (15%) | 82 | 🔴 **FAILED** |
+| PreGA v4.22 | release-2.15 | 105 | 21 (20%) | 84 | 🔴 **FAILED** |
+| PreGA v4.22 | release-2.16 | 105 | 21 (20%) | 84 | 🔴 **FAILED** |
 
 ### Key Findings
 
