@@ -32,14 +32,14 @@ This document contains validation reports for OpenShift operator images using th
 | | | lifecycle-agent:stable | Source | 3 | 3 (100%) | 0 | 🟢 **PASSED** |
 | | | redhat-oadp-operator:stable | Source | 7 | 7 (100%) | 0 | 🟢 **PASSED** |
 | ODF (PreGA v4.21) | v4.21 | odf-operator:stable-4.21 | IDMS | 30 | 29 (97%) | 1 | 🟡 **FAILED** |
-| ACM (PreGA v4.21) | v4.21 | advanced-cluster-management:release-2.16 | IDMS | 105 | 104 (99%) | 1 | 🟡 **FAILED** |
+| ACM (PreGA v4.21) | v4.21 | advanced-cluster-management:release-2.16 | IDMS | 105 | 105 (100%) | 0 | 🟢 **PASSED** |
 | RAN (PreGA v4.21) | v4.21 | ptp-operator:stable | IDMS | 5 | 5 (100%) | 0 | 🟢 **PASSED** |
-| | | sriov-network-operator:stable | IDMS | 10 | 9 (90%) | 1 | 🟡 **FAILED** |
+| | | sriov-network-operator:stable | IDMS | 10 | 10 (100%) | 0 | 🟢 **PASSED** |
 | | | cluster-logging:stable-6.4 | IDMS | 7 | 7 (100%) | 0 | 🟢 **PASSED** |
 | ODF (PreGA v4.22) | v4.22 | odf-operator:stable-4.22 | IDMS | 30 | 29 (97%) | 1 | 🟡 **FAILED** |
-| ACM (PreGA v4.22) | v4.22 | advanced-cluster-management:release-2.16 | IDMS | 105 | 104 (99%) | 1 | 🟡 **FAILED** |
+| ACM (PreGA v4.22) | v4.22 | advanced-cluster-management:release-2.16 | IDMS | 105 | 105 (100%) | 0 | 🟢 **PASSED** |
 | RAN (PreGA v4.22) | v4.22 | ptp-operator:stable | IDMS | 5 | 5 (100%) | 0 | 🟢 **PASSED** |
-| | | sriov-network-operator:stable | IDMS | 10 | 9 (90%) | 1 | 🟡 **FAILED** |
+| | | sriov-network-operator:stable | IDMS | 10 | 10 (100%) | 0 | 🟢 **PASSED** |
 | | | cluster-logging:stable-6.2 | IDMS | 7 | 7 (100%) | 0 | 🟢 **PASSED** |
 
 > **Legend:** 🟢 100% available | 🟡 >90% available | 🔴 <90% available
@@ -57,27 +57,25 @@ The PreGA IDMS files have been enhanced with namespace-level mappings and multi-
 | `registry.redhat.io/multicluster-engine` | `quay.io/prega/test/acm-d` | ACM uses GA paths but PreGA mirrors to acm-d |
 | `registry.redhat.io/rhacm2` | `quay.io/prega/test/acm-d` | ACM uses GA paths but PreGA mirrors to acm-d |
 | `registry.redhat.io/rhceph` | `quay.io/prega/test/rhceph-dev` | ODF uses rhceph but PreGA mirrors to rhceph-dev |
-| `registry.redhat.io/openshift4/ose-*` | `rhceph-dev/openshift-ose-*` then `openshift4/ose-*` | ODF infra images exist in different locations |
+| `registry.redhat.io/openshift4/ose-*` | `openshift4/ose-*` then `rhceph-dev/openshift-ose-*` | ODF/ACM/RAN infra images (kube-rbac-proxy) |
 | `registry.stage.redhat.io/openshift4` | `quay.io/prega/test/openshift4` | Staging registry mapping |
 
 ### Improvement Summary
 
 | Operator | Before Workaround | After Workaround | Improvement |
 |----------|------------------|------------------|-------------|
-| ACM v4.21 | 18% (19/105) | 99% (104/105) | +81% |
-| ACM v4.22 | 18% (19/105) | 99% (104/105) | +81% |
+| ACM v4.21 | 18% (19/105) | 100% (105/105) | +82% |
+| ACM v4.22 | 18% (19/105) | 100% (105/105) | +82% |
 | ODF v4.21 | 73% (22/30) | 97% (29/30) | +24% |
 | ODF v4.22 | 73% (22/30) | 97% (29/30) | +24% |
-| RAN v4.21 | 80% (combined) | 96% (21/22) | +16% |
-| RAN v4.22 | 87% (combined) | 96% (22/23) | +9% |
+| RAN v4.21 | 80% (combined) | 100% (22/22) | +20% |
+| RAN v4.22 | 87% (combined) | 100% (23/23) | +13% |
 
 ### Remaining Gaps (Genuine - Not Fixable)
 
 These image SHAs are not mirrored anywhere in the PreGA registry:
 
 - `rhel8/postgresql-12@sha256:2bc5657164a3388e932a0b5c99a01f5bc17f38490296ddbe1d8cb9e2a8ffb288` (ODF dependency)
-- `ose-kube-rbac-proxy-rhel9@sha256:c1a84feb88d53e93bdcf2cd5f76e2cbb18541c8b0e2979c132a888d6c280b664` (ACM dependency)
-- `ose-kube-rbac-proxy-rhel9@sha256:145e9784b681ac7defa0a1547c03a6db9a587bf9be2820428eee84f58f8f1f24` (RAN sriov dependency)
 
 ---
 
