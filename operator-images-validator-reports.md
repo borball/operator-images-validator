@@ -332,30 +332,27 @@ PreGA tests validate images using IDMS mirror mappings with namespace workaround
   🔧 Operators: ptp-operator(stable)
                 sriov-network-operator(stable)
                 cluster-logging(stable-6.2)
-  📅 Date:      2026-02-02 15:40:12 UTC
+  📅 Date:      2026-02-03 01:58:42 UTC
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ❌ Status: FAILED
+  ✅ Status: PASSED
 
   📊 Summary:
      Total Images:     23
-     ✓ Available:      21 (91.3%)
-     ✗ Missing:        2 (8.7%)
+     ✓ Available:      23 (100.0%)
+     ✗ Missing:        0 (0.0%)
 
-  ██████████████████████████████████████████████████████░░░░░░ 91.3%
+  ████████████████████████████████████████████████████████████ 100.0%
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ❌ Missing Images (2):
-
-     • registry.redhat.io/openshift4/ose-kube-rbac-proxy-rhel9@sha256:38dd91ff7f37ca3d9a54f813045b97b809b6d81b40cb240cb22aa947285d83b8
-     • registry.redhat.io/openshift4/ose-kube-rbac-proxy-rhel9@sha256:5c4fb3049af4fc41f00eb2b4c72a42c03aa3ac689ba517ad47567e7722118fa6
+  ✅ All images are available!
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ```
 
-**Note:** The 2 missing `ose-kube-rbac-proxy-rhel9` SHAs are genuine gaps - these specific digests don't exist anywhere in the PreGA mirror.
+**Note:** The `ose-kube-rbac-proxy-rhel9` images are now found via multi-mirror fallback in `art-images-share`.
 
 ---
 
