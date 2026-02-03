@@ -1,4 +1,2 @@
-# Ignore generated reports (keep only .gitkeep)
-*
-!.gitkeep
-!.gitignore
+# Keep generated reports
+!*.md
