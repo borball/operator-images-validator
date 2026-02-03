@@ -98,6 +98,10 @@ IDMS_FILE=""
 declare -A IDMS_MAPPINGS
 IDMS_MAPPING_COUNT=0
 
+# Report saving options
+SAVE_REPORT=false
+REPORT_DIR=""
+
 # Associative array to store operator channels (operator -> channel)
 declare -A OPERATOR_CHANNELS
 
@@ -144,6 +148,7 @@ ${BWHITE}VALIDATE OPTIONS${NC}
     ${BGREEN}--output-format${NC} ${MUTED}<fmt>${NC}   Output format: table, json, yaml, remediation ${DIM}(default: table)${NC}
     ${BGREEN}--parallel${NC} ${MUTED}<n>${NC}          Number of parallel image checks ${DIM}(default: 10)${NC}
     ${BGREEN}--no-deps${NC}               Skip automatic dependency resolution
+    ${BGREEN}--save-report${NC} ${MUTED}[dir]${NC}     Save report to markdown file ${DIM}(default: ./reports)${NC}
     
     ${INFO}▸${NC}  For ${SUCCESS}GA releases${NC}, omit both options to validate at source registry.
     ${INFO}▸${NC}  For ${WARNING}disconnected${NC} environments, use ${BGREEN}--idms${NC} or ${BGREEN}--target-registry${NC}.
@@ -172,6 +177,11 @@ ${BWHITE}EXAMPLES${NC}
     ${ACCENT}\$${NC} $0 validate --catalog registry.redhat.io/redhat/redhat-operator-index:v4.22 \\
         --operators odf-operator:stable-4.22,ptp-operator \\
         --idms /path/to/imagedigestmirrorset.yaml
+
+    ${DIM}# Validate and save report to markdown file${NC}
+    ${ACCENT}\$${NC} $0 validate --catalog quay.io/prega/prega-operator-index:v4.22 \\
+        --operators advanced-cluster-management:release-2.16 \\
+        --idms prega-idms-4.22.yaml --save-report
 
     ${DIM}# Validate all mirrors in IDMS file are accessible${NC}
     ${ACCENT}\$${NC} $0 idms-validate --idms /path/to/imagedigestmirrorset.yaml
@@ -1439,6 +1449,11 @@ cmd_validate() {
             ;;
     esac
     
+    # Save markdown report if requested
+    if [[ "$SAVE_REPORT" == "true" ]]; then
+        save_markdown_report "$available" "$missing" "${missing_images[@]}"
+    fi
+    
     # Exit with appropriate code
     if [[ $missing -gt 0 ]]; then
         exit 1
@@ -1665,6 +1680,133 @@ EOF
     done
     
     echo 'echo "Done!"'
+}
+
+#######################################
+# Save markdown report to file
+#######################################
+save_markdown_report() {
+    local available=${1:-0}
+    local missing=${2:-0}
+    shift 2
+    local missing_images=("$@")
+    
+    # Ensure numeric
+    available=${available//[^0-9]/}
+    missing=${missing//[^0-9]/}
+    [[ -z "$available" ]] && available=0
+    [[ -z "$missing" ]] && missing=0
+    
+    local total=$((available + missing))
+    local available_pct=0
+    local missing_pct=0
+    
+    if [[ $total -gt 0 ]]; then
+        available_pct=$(awk "BEGIN {printf \"%.1f\", $available * 100 / $total}")
+        missing_pct=$(awk "BEGIN {printf \"%.1f\", $missing * 100 / $total}")
+    fi
+    
+    # Determine status
+    local status_text="PASSED"
+    local status_emoji="🟢"
+    if [[ $missing -gt 0 ]]; then
+        status_text="FAILED"
+        if (( $(echo "$available_pct >= 90" | bc -l) )); then
+            status_emoji="🟡"
+        else
+            status_emoji="🔴"
+        fi
+    fi
+    
+    # Extract catalog tag for filename
+    local catalog_tag
+    catalog_tag=$(echo "$INDEX_IMAGE" | sed 's|.*/||' | sed 's/:/-/g')
+    
+    # Create report directory if needed
+    mkdir -p "$REPORT_DIR"
+    
+    local report_file="$REPORT_DIR/${catalog_tag}-result.md"
+    local timestamp
+    timestamp=$(date -u '+%Y-%m-%d %H:%M:%S UTC')
+    
+    # Build operators list
+    local operators_list=""
+    if [[ -n "$OPERATORS" ]]; then
+        IFS=',' read -ra op_array <<< "$OPERATORS"
+        for op_entry in "${op_array[@]}"; do
+            op_entry=$(echo "$op_entry" | xargs)
+            parse_operator_channel "$op_entry"
+            local op_name="$PARSED_OPERATOR"
+            local ch="${OPERATOR_CHANNELS[$op_name]:-auto}"
+            operators_list+="- \`${op_name}:${ch}\`"$'\n'
+        done
+    fi
+    
+    # Build mode info
+    local mode_info="Source Registry (GA Release)"
+    local idms_info=""
+    if [[ -n "$IDMS_FILE" ]]; then
+        mode_info="IDMS Mirror Mapping"
+        idms_info="| IDMS File | \`$(basename "$IDMS_FILE")\` ($IDMS_MAPPING_COUNT mappings) |"
+    elif [[ -n "$TARGET_REGISTRY" ]]; then
+        mode_info="Target Registry: \`$TARGET_REGISTRY\`"
+    fi
+    
+    # Write markdown report
+    cat > "$report_file" << EOF
+# Operator Images Validation Report
+
+**Generated:** $timestamp
+
+## Configuration
+
+| Parameter | Value |
+|-----------|-------|
+| Catalog | \`$INDEX_IMAGE\` |
+| Mode | $mode_info |
+$idms_info
+
+### Operators Validated
+
+$operators_list
+
+## Results Summary
+
+| Metric | Value |
+|--------|-------|
+| **Status** | $status_emoji **$status_text** |
+| Total Images | $total |
+| Available | $available ($available_pct%) |
+| Missing | $missing ($missing_pct%) |
+
+EOF
+
+    # Add missing images section if any
+    if [[ ${#missing_images[@]} -gt 0 && $missing -gt 0 ]]; then
+        cat >> "$report_file" << EOF
+## Missing Images ($missing)
+
+EOF
+        for img in "${missing_images[@]}"; do
+            [[ -n "$img" ]] && echo "- \`$img\`" >> "$report_file"
+        done
+        echo "" >> "$report_file"
+    else
+        cat >> "$report_file" << EOF
+## Status
+
+✅ All images are available!
+
+EOF
+    fi
+    
+    # Add footer
+    cat >> "$report_file" << EOF
+---
+*Report generated by operator-images-validator v${VERSION_STRING}*
+EOF
+    
+    echo -e "  ${SUCCESS}📄 Report saved:${NC} $report_file"
 }
 
 #######################################
@@ -1918,6 +2060,17 @@ parse_args() {
             --idms)
                 IDMS_FILE="$2"
                 shift 2
+                ;;
+            --save-report)
+                SAVE_REPORT=true
+                # Check if next arg is a directory path (optional)
+                if [[ -n "${2:-}" && ! "$2" =~ ^-- ]]; then
+                    REPORT_DIR="$2"
+                    shift 2
+                else
+                    REPORT_DIR="./reports"
+                    shift
+                fi
                 ;;
             --debug)
                 DEBUG=true

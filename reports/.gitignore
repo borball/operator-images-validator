@@ -1,0 +1,4 @@
+# Ignore generated reports (keep only .gitkeep)
+*
+!.gitkeep
+!.gitignore
