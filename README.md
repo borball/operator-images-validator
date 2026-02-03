@@ -90,13 +90,13 @@ chmod +x operator-images-validator.sh
 # Validate PreGA with IDMS (operator:channel format)
 ./operator-images-validator.sh validate \
   --catalog quay.io/prega/prega-operator-index:v4.22 \
-  --idms prega-idms-4.22.yaml \
-  --operators odf-operator:stable-4.22
+  --idms reports/prega-idms-4.22.yaml \
+  --operators odf-operator:stable-4.21
 
 # Validate RAN operators for Telco deployments
 ./operator-images-validator.sh validate \
   --catalog quay.io/prega/prega-operator-index:v4.22 \
-  --idms prega-idms-4.22.yaml \
+  --idms reports/prega-idms-4.22.yaml \
   --operators ptp-operator:stable,local-storage-operator:stable,sriov-network-operator:stable,cluster-logging:stable-6.2,lifecycle-agent:stable,redhat-oadp-operator:stable
 ```
 
@@ -157,6 +157,7 @@ Validate that all mirrors defined in an IDMS file are accessible.
 | `--version <ver>` | Use specific version |
 | `--no-deps` | Skip dependency resolution |
 | `--output-format <fmt>` | Output format: table, json, yaml, remediation |
+| `--save-report [dir]` | Save report to markdown file (default: ./reports) |
 | `-v, --verbose` | Show detailed progress |
 | `-h, --help` | Show help message |
 
@@ -193,7 +194,7 @@ RAN refers to a set of several Telco operators commonly used for Radio Access Ne
 ```bash
 ./operator-images-validator.sh validate \
   --catalog quay.io/prega/prega-operator-index:v4.22 \
-  --idms prega-idms.yaml \
+  --idms reports/prega-idms-4.22.yaml \
   --operators ptp-operator:stable,local-storage-operator:stable,sriov-network-operator:stable,cluster-logging:stable-6.2,lifecycle-agent:stable,redhat-oadp-operator:stable
 ```
 
@@ -223,8 +224,8 @@ Use an ImageDigestMirrorSet file to map source images to mirror locations.
 ```bash
 ./operator-images-validator.sh validate \
   --catalog quay.io/prega/prega-operator-index:v4.22 \
-  --idms prega-idms.yaml \
-  --operators odf-operator:stable-4.22
+  --idms reports/prega-idms-4.22.yaml \
+  --operators odf-operator:stable-4.21
 ```
 
 ### 3. Target Registry Mode (Disconnected)
@@ -280,8 +281,8 @@ Specify a target registry where all images should be mirrored.
 ```bash
 ./operator-images-validator.sh validate \
   --catalog quay.io/prega/prega-operator-index:v4.22-20260121T101531 \
-  --idms prega-idms.yaml \
-  --operators odf-operator:stable-4.22
+  --idms reports/prega-idms-4.22.yaml \
+  --operators odf-operator:stable-4.21
 ```
 
 ```
@@ -321,6 +322,40 @@ Specify a target registry where all images should be mirrored.
 
 The report shows each operator with its channel in parentheses (e.g., `odf-operator(stable-4.22)`).
 
+## Saving Reports
+
+Save validation results to markdown files for tracking and documentation:
+
+```bash
+# Save to default ./reports folder
+./operator-images-validator.sh validate \
+  --catalog quay.io/prega/prega-operator-index:v4.22-20260203T094938 \
+  --idms reports/prega-idms-4.22.yaml \
+  --operators advanced-cluster-management:release-2.16 \
+  --save-report
+
+# Save to custom folder
+./operator-images-validator.sh validate \
+  --catalog quay.io/prega/prega-operator-index:v4.22 \
+  --idms reports/prega-idms-4.22.yaml \
+  --operators odf-operator:stable-4.21 \
+  --save-report /path/to/reports
+```
+
+Reports are saved as `{catalog-tag}-result.md` (e.g., `prega-operator-index-v4.22-20260203T094938-result.md`).
+
+### Reports Folder Structure
+
+```
+reports/
+├── prega-idms-4.21.yaml                              # IDMS with workarounds for v4.21
+├── prega-idms-4.22.yaml                              # IDMS with workarounds for v4.22
+├── v4.21-20260202T055019-idms.yaml                   # Original IDMS for v4.21
+├── v4.22-20260202T095851-idms.yaml                   # Original IDMS for v4.22
+├── prega-operator-index-v4.21-20260203T082423-result.md  # Validation report
+└── prega-operator-index-v4.22-20260203T094938-result.md  # Validation report
+```
+
 ## Remediation
 
 Generate `skopeo copy` commands for missing images:
@@ -328,8 +363,8 @@ Generate `skopeo copy` commands for missing images:
 ```bash
 ./operator-images-validator.sh validate \
   --catalog quay.io/prega/prega-operator-index:v4.22 \
-  --idms prega-idms.yaml \
-  --operators odf-operator:stable-4.22 \
+  --idms reports/prega-idms-4.22.yaml \
+  --operators odf-operator:stable-4.21 \
   --output-format=remediation
 ```
 
