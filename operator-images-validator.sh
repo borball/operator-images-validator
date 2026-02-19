@@ -2063,8 +2063,8 @@ parse_args() {
                 ;;
             --save-report)
                 SAVE_REPORT=true
-                # Check if next arg is a directory path (optional)
-                if [[ -n "${2:-}" && ! "$2" =~ ^-- ]]; then
+                # Check if next arg is a directory path (optional; must not look like an option)
+                if [[ -n "${2:-}" && ! "$2" =~ ^- ]]; then
                     REPORT_DIR="$2"
                     shift 2
                 else
